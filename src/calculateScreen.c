@@ -4,9 +4,19 @@
  * and how to draw the walls
  */
 
+// display constants
 #define DISPLAY_HEIGHT 720
 #define DISPLAY_WIDTH  1280
 #define BYTE_SIZE      8
+
+// math constants
+#define PI 3.1415926535
+#define P2 PI/2
+#define P3 3*PI/2
+#define DR 0.0174532925
+
+// game constants
+#define FOV 60
 
 
 /* Draw a vertical line with specified height and opacity
@@ -32,15 +42,113 @@ void drawLine(unsigned int* line, int distance, float opacity) {
     }
 }
 
-void panScreen(unsigned int* display[], int distance) {
-    // Shift all bits in display by distance
-    // If distance is positive, shift left
-    // If distance is negative, shift right
-    // If distance is 0, do nothing
+void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize) {
+    // Cast a ray from the player position to the edge of the screen
+    // Calculate the distance to the wall
+    // Calculate the opacity of the wall
+    // Draw the wall
+    int r, mx, my, mp, dof;
+    float rayX, rayY, rayDirection, xo, yo, disT;
+    rayDirection = *playerDirection - DR;
+    if (rayDirection < 0) {
+        rayDirection += 2*PI;
+    }
+    if (rayDirection > 2*PI) {
+        rayDirection -= 2*PI;
+    }
+    for (r = 0; r < FOV; r++) {
+        // Chech horizontal lines
+        dof = 0;
+        //float disH=1000000, hx=*playerPosX, hy=*playerPosY;
+        float aTan = -1/tan(rayDirection);
+        if (rayDirection > PI) {
+            rayY = (((int)*playerPosY >> 6) << 6) - 0.0001;
+            rayX = (*playerPosY - rayY) * aTan + *playerPosX;
+            yo = -64;
+            xo = -yo * aTan;
+        }
+        if (rayDirection < PI) {
+            rayY = (((int)*playerPosY >> 6) << 6) + 64;
+            rayX = (*playerPosY - rayY) * aTan + *playerPosX;
+            yo = 64;
+            xo = -yo * aTan;
+        }
+        if (rayDirection == 0 || rayDirection == PI) {
+            rayX = *playerPosX;
+            rayY = *playerPosY;
+            dof = 8;
+        }
 
-    // Shift left with matrix multiplication (each array of ints is a column)
-    
-    // Shift right with matrix multiplication (each array of ints is a column)
+        while(dof < 8) {
+            mx = (int)(rayX) >> 6;
+            my = (int)(rayY) >> 6;
+            mp = my * mapSize + mx;
+            if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
+                // hit wall
+                // Calculate distance to wall
+                //disH = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
+                dof = 8;
+            } else {
+                // next line
+                rayX += xo;
+                rayY += yo;
+                dof += 1;
+            }
+        }
+        
+        // Check vertical lines
+        dof = 0;
+        //float disV=1000000, vx=*playerPosX, vy=*playerPosY;
+        float nTan = -tan(rayDirection);
+        if (rayDirection > PI/2 && rayDirection < 3*PI/2) {
+            rayX = (((int)*playerPosX >> 6) << 6) - 0.0001;
+            rayY = (*playerPosX - rayX) * nTan + *playerPosY;
+            xo = -64;
+            yo = -xo * nTan;
+        }
+        if (rayDirection < PI/2 || rayDirection > 3*PI/2) {
+            rayX = (((int)*playerPosX >> 6) << 6) + 64;
+            rayY = (*playerPosX - rayX) * nTan + *playerPosY;
+            xo = 64;
+            yo = -xo * nTan;
+        }
+        if (rayDirection == 0 || rayDirection == PI) {
+            rayX = *playerPosX;
+            rayY = *playerPosY;
+            dof = 8;
+        }
+        
+        while (dof = 8) {
+            mx = (int)(rayX) >> 6;
+            my = (int)(rayY) >> 6;
+            mp = my * mapSize + mx;
+            if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
+                // hit wall
+                // Calculate distance to wall
+                //disV = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
+                dof = 8;
+            } else {
+                // next line
+                rayX += xo;
+                rayY += yo;
+                dof += 1;
+            }
+        }
+
+        //if(disV < disH) {raX=vx; raY=vy; disT=disV; side=0;}
+        //if(disH < disV) {raX=hx; raY=hy; disT=disH; side=1;}
+
+        // Draw the wall
+        //drawLine(&display[r], disT, 1);
+
+        rayDirection += DR;
+        if (rayDirection < 0) {
+            rayDirection += 2*PI;
+        }
+        if (rayDirection > 2*PI) {
+            rayDirection -= 2*PI;
+        }
+    }
 }
 
 
