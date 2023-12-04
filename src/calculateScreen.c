@@ -64,7 +64,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         rayDirection -= 2*PI;
     }
     for (r = 0; r < FOV; r++) {
-        // Chech horizontal lines
+        // Check horizontal lines
         dof = 0;
         //float disH=1000000, hx=*playerPosX, hy=*playerPosY;
         float aTan = -1/tan(rayDirection);
@@ -155,6 +155,25 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         if (rayDirection > 2*PI) {
             rayDirection -= 2*PI;
         }
+    }
+}
+
+/* Move the player in the directino they are facing
+ * @param playerDirection: pointer to the player's direction
+ * @param playerPosX:      pointer to the player's x position
+ * @param playerPosY:      pointer to the player's y position
+ * @param map:             pointer to the map
+ * @param mapSize:         size of the map
+ */
+void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize) {
+    // determine the player movement based on the direction
+    float moveX = cos(*playerDirection) * 0.1;
+    float moveY = sin(*playerDirection) * 0.1;
+
+    // check for collisions
+    if (map[(int)(*playerPosY + moveY) * mapSize + (int)(*playerPosX + moveX)] == 0) {
+        *playerPosX += moveX;
+        *playerPosY += moveY;
     }
 }
 
