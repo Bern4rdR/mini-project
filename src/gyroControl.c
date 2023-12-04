@@ -7,7 +7,12 @@
 #include "pic32mx.h"
 
 
+// pins
 #define POTENTIONMETER_PIN 0
+#define BUTTON_PIN 1
+// math
+#define PI 3.1415926535
+#define P2 PI/2
 
 
 voind setup() {
@@ -45,22 +50,60 @@ voind setup() {
     UARTEnable(UART1, UART_ENABLE_FLAGS(UART_PERIPHERAL
                                       | UART_RX
                                       | UART_TX));
+
+    // configure the UART interrupts
+    INTEnable(INT_SOURCE_UART_RX(UART1), INT_ENABLED);
+    INTSetVectorPriority(INT_VECTOR_UART(UART1), INT_PRIORITY_LEVEL_2);
+    INTSetVectorSubPriority(INT_VECTOR_UART(UART1), INT_SUB_PRIORITY_LEVEL_0);
+
+    // enable interrupts
+    INTEnableSystemMultiVectoredInt();
+    
+    // configure the ADC interrupt
+    INTEnable(INT_AD1, INT_ENABLED);
+    INTSetVectorPriority(INT_VECTOR_AD1, INT_PRIORITY_LEVEL_2);
+    INTSetVectorSubPriority(INT_VECTOR_AD1, INT_SUB_PRIORITY_LEVEL_0);
 }
 
-void loop() {
-    while(!mAD1GetIntFlag()) {
+/* Update the player direction and walking status based on the inputs
+ * @param playerDirection: pointer to the player's direction
+ * @param walking:         pointer to the player's walking status
+ */
+void get_inputs(float* playerDirection, bool* walking) {
+    if(!mAD1GetIntFlag()) {
         // wait for the first conversion to complete
         // so there will be valid data in ADC result registers
+        return;
     }
+    // read potentiometer data
     int data = ReadADC10(0);
+    // read button data
+    *button = PORTD & (1 << BUTTON_PIN);
 
-    int percentage = data / 1023 * 100;
+    // change potentiometer to rotation
+    float rotation = data / 1023 * 2 * PI;
+
+    // transform rotation to intuitively align it with the potentiometer
+    // currently:  turning the potentiometer clockwise will turn the player counter-clockwise
+    //             having the potentiometer in the middle will point the player left on the map (pi radians)
+    // desired:    turning the potentiometer clockwise will turn the player clockwise
+    //             having the potentiometer in the middle will point the player up on the map (pi/2 radians)
+    rotation = P2 - rotation;
+
+    // clamp rotation to 0-2*PI
+    if (rotation < 0) {
+        rotation += 2*PI;
+    }
+    if (rotation > 2*PI) {
+        rotation -= 2*PI;
+    }
+
+    // set the player direction
+    *playerDirection = rotation;
 
     char buffer[10];
-    sprintf(buffer, "Potentiometer at %d%%\n", percentage);
+    sprintf(buffer, "Potentiometer at %d%%\n", rotation);
     putsUART1(buffer);
-
-    delay(100);
 }
 
 int mian() {
