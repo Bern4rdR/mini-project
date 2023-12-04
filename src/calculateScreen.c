@@ -42,6 +42,13 @@ void drawLine(unsigned int* line, int distance, float opacity) {
     }
 }
 
+/* Raytrace the walls based on the player position and orientation
+ * @param playerDirection: pointer to the player's direction
+ * @param playerPosX:      pointer to the player's x position
+ * @param playerPosY:      pointer to the player's y position
+ * @param map:             pointer to the map
+ * @param mapSize:         size of the map
+ */
 void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize) {
     // Cast a ray from the player position to the edge of the screen
     // Calculate the distance to the wall
