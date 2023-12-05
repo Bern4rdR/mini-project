@@ -18,6 +18,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 
 /* Draw a vertical line with specified height and opacity
@@ -25,9 +26,9 @@
  * @param distance: distance to the wall
  * @param opacity:  opacity of the line (0-1)
  */
-void drawLine(int* line, float distance, float opacity) {
-    // clear line
-    *line = 0;
+void drawLine(char* line[4], float distance, float opacity) {
+    // clear column
+    memset(*line, 0, 4 * sizeof(char*));
 
     // calculate the height of the line
     int height = DISPLAY_HEIGHT - (int)distance;
@@ -35,7 +36,12 @@ void drawLine(int* line, float distance, float opacity) {
 
     for (int i = distance/2; i < height; i++) {
         if (i % dither) {
-            *line |= 1UL << i;
+            // get the chunk index and bit index of that column
+            int char_index = i / BYTE_SIZE;
+            int bit_index = i % BYTE_SIZE;
+
+            // set the bit
+            *line[char_index] |= 1 << bit_index;
         }
     }
 }
@@ -47,7 +53,7 @@ void drawLine(int* line, float distance, float opacity) {
  * @param map:             pointer to the map
  * @param mapSize:         size of the map
  */
-void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize, int display[]) {
+void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize, char display[4][DISPLAY_WIDTH]) {
     // Cast a ray from the player position to the edge of the screen
     // Calculate the distance to the wall
     // Calculate the opacity of the wall
@@ -145,7 +151,9 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         if(disH < disV) {rayX=hx; rayY=hy; disT=disH; }//side=1;}
 
         // Draw one line of the wall
-        drawLine(&display[r], disT, 1);
+        char* column[4] = {&display[0][r], &display[1][r], &display[2][r], &display[3][r]};
+        drawLine(column, disT, 1);
+
 
         rayDirection += DR;
         if (rayDirection < 0) {
@@ -179,7 +187,8 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
 
 // used to test the code, final version will be in main.c
 // int main() {
-//     int display[DISPLAY_WIDTH] = {0};
+//     char display[4][DISPLAY_WIDTH];
+//     memset(display, 0, sizeof(display));
 //     int map[] = {
 //         1, 1, 1, 1, 1, 1, 1, 1,
 //         1, 0, 1, 0, 0, 0, 0, 1,
@@ -196,6 +205,15 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
 //     // Test:  distance can't be more than DISPLAY_HEIGHT
 //     // In the future, display will be a 2D array and only one column will be passed through
 //     castRay(&playerDirection, &playerPosX, &playerPosY, map, 8, display);
+
+//     // print the display
+//     // 4 characters per line, 128 lines
+//     for (int i = 0; i < DISPLAY_HEIGHT; i++) {
+//         for (int j = 0; j < 4; j++) {
+//             printf("%c", display[j][i]);
+//         }
+//         printf("\n");
+//     }
 
 //     return 0;
 // }
