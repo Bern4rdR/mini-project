@@ -95,7 +95,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             mx = (int)(rayX) >> 6;
             my = (int)(rayY) >> 6;
             mp = my * mapSize + mx;
-            if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
+            if (mp > 0 && mp < mapSize * mapSize && map[mp] != 0) {
                 // hit wall
                 // Calculate distance to wall
                 disH = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
@@ -134,7 +134,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             mx = (int)(rayX) >> 6;
             my = (int)(rayY) >> 6;
             mp = my * mapSize + mx;
-            if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
+            if (mp > 0 && mp < mapSize * mapSize && map[mp] != 0) {
                 // hit wall
                 // Calculate distance to wall
                 disV = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
