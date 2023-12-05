@@ -14,8 +14,8 @@
 #define PI 3.1415926535
 #define P2 PI/2
 
-
-voind setup() {
+// needs to change to use the chipkit potentiometer
+void setup() {
     // ensure that ADC is off before setting the configuration
     CloseADC10();
 
@@ -106,7 +106,7 @@ void get_inputs(float* playerDirection, bool* walking) {
     putsUART1(buffer);
 }
 
-int mian() {
+int main() {
     setup();
     while(1) {
         loop();

@@ -5,8 +5,8 @@
  */
 
 // display constants
-#define DISPLAY_HEIGHT 720
-#define DISPLAY_WIDTH  1280
+#define DISPLAY_HEIGHT 32       // screen pixels 
+#define DISPLAY_WIDTH  128      // screen pixels
 #define BYTE_SIZE      8
 
 // math constants
@@ -19,19 +19,20 @@
 #define FOV 60
 
 
+
 /* Draw a vertical line with specified height and opacity
  * @param line:     pointer to the line to be drawn
- * @param distance: distance from the top of the screen
+ * @param distance: distance to the wall
  * @param opacity:  opacity of the line (0-1)
  */
-void drawLine(unsigned int* line, int distance, float opacity) {
+void drawLine(int* line, float distance, float opacity) {
     // Clear line
-    for (int i = 0; i < DISPLAY_HEIGHT/BYTE_SIZE; i++) {
+    for (int i = 0; i < DISPLAY_HEIGHT; i++) {
         line[i] = 0;
     }
 
     // Calculate the height of the line
-    int height = DISPLAY_HEIGHT - distance;
+    int height = DISPLAY_HEIGHT - (int)distance;
     int dither = height * opacity;
 
     // Set the pixels on the line
@@ -49,7 +50,7 @@ void drawLine(unsigned int* line, int distance, float opacity) {
  * @param map:             pointer to the map
  * @param mapSize:         size of the map
  */
-void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize) {
+float castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize, int* display[]) {
     // Cast a ray from the player position to the edge of the screen
     // Calculate the distance to the wall
     // Calculate the opacity of the wall
@@ -66,7 +67,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
     for (r = 0; r < FOV; r++) {
         // Check horizontal lines
         dof = 0;
-        //float disH=1000000, hx=*playerPosX, hy=*playerPosY;
+        float disH=1000000, hx=*playerPosX, hy=*playerPosY;
         float aTan = -1/tan(rayDirection);
         if (rayDirection > PI) {
             rayY = (((int)*playerPosY >> 6) << 6) - 0.0001;
@@ -93,7 +94,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
                 // hit wall
                 // Calculate distance to wall
-                //disH = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
+                disH = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
                 dof = 8;
             } else {
                 // next line
@@ -105,7 +106,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         
         // Check vertical lines
         dof = 0;
-        //float disV=1000000, vx=*playerPosX, vy=*playerPosY;
+        float disV=1000000, vx=*playerPosX, vy=*playerPosY;
         float nTan = -tan(rayDirection);
         if (rayDirection > PI/2 && rayDirection < 3*PI/2) {
             rayX = (((int)*playerPosX >> 6) << 6) - 0.0001;
@@ -132,7 +133,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
                 // hit wall
                 // Calculate distance to wall
-                //disV = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
+                disV = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
                 dof = 8;
             } else {
                 // next line
@@ -142,11 +143,11 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             }
         }
 
-        //if(disV < disH) {raX=vx; raY=vy; disT=disV; side=0;}
-        //if(disH < disV) {raX=hx; raY=hy; disT=disH; side=1;}
+        if(disV < disH) {rayX=vx; rayY=vy; disT=disV; }//side=0;}
+        if(disH < disV) {rayX=hx; rayY=hy; disT=disH; }//side=1;}
 
         // Draw the wall
-        //drawLine(&display[r], disT, 1);
+        drawLine(&display[r], disT, 1);
 
         rayDirection += DR;
         if (rayDirection < 0) {
