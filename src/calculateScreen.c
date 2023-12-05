@@ -15,9 +15,9 @@
 #define P3 3*PI/2
 #define DR 0.0174532925
 
-// game constants
-#define FOV 60
 
+#include <stdio.h>
+#include <math.h>
 
 
 /* Draw a vertical line with specified height and opacity
@@ -26,20 +26,17 @@
  * @param opacity:  opacity of the line (0-1)
  */
 void drawLine(int* line, float distance, float opacity) {
-    // Clear line
-    for (int i = 0; i < DISPLAY_HEIGHT; i++) {
-        line[i] = 0;
-    }
+    // clear line
+    *line = 0;
 
-    // Calculate the height of the line
+    // calculate the height of the line
     int height = DISPLAY_HEIGHT - (int)distance;
     int dither = height * opacity;
 
-    // Set the pixels on the line
-    int i;
-    for (i = distance/2; i < DISPLAY_HEIGHT - distance/2; i++) {
-        // Use opacity to simulate color
-        line[i/BYTE_SIZE] |= (i % dither) ? 1UL << i % BYTE_SIZE : 0UL << i % BYTE_SIZE;
+    for (int i = distance/2; i < height; i++) {
+        if (i % dither) {
+            *line |= 1UL << i;
+        }
     }
 }
 
@@ -50,7 +47,7 @@ void drawLine(int* line, float distance, float opacity) {
  * @param map:             pointer to the map
  * @param mapSize:         size of the map
  */
-float castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize, int* display[]) {
+void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize, int display[]) {
     // Cast a ray from the player position to the edge of the screen
     // Calculate the distance to the wall
     // Calculate the opacity of the wall
@@ -64,7 +61,7 @@ float castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[
     if (rayDirection > 2*PI) {
         rayDirection -= 2*PI;
     }
-    for (r = 0; r < FOV; r++) {
+    for (r = 0; r < DISPLAY_WIDTH; r++) {
         // Check horizontal lines
         dof = 0;
         float disH=1000000, hx=*playerPosX, hy=*playerPosY;
@@ -87,7 +84,8 @@ float castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[
             dof = 8;
         }
 
-        while(dof < 8) {
+        // currently stuck in infinite loop, need to fix
+        while(dof >= 8) {
             mx = (int)(rayX) >> 6;
             my = (int)(rayY) >> 6;
             mp = my * mapSize + mx;
@@ -126,7 +124,7 @@ float castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[
             dof = 8;
         }
         
-        while (dof = 8) {
+        while (dof < 8) {
             mx = (int)(rayX) >> 6;
             my = (int)(rayY) >> 6;
             mp = my * mapSize + mx;
@@ -146,7 +144,7 @@ float castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[
         if(disV < disH) {rayX=vx; rayY=vy; disT=disV; }//side=0;}
         if(disH < disV) {rayX=hx; rayY=hy; disT=disH; }//side=1;}
 
-        // Draw the wall
+        // Draw one line of the wall
         drawLine(&display[r], disT, 1);
 
         rayDirection += DR;
@@ -179,13 +177,25 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
 }
 
 
-int main() {
-    // Display with 1x720 resolution:  initialize all bits to 0
-    unsigned char display[DISPLAY_HEIGHT/BYTE_SIZE] = {0};
+// used to test the code, final version will be in main.c
+// int main() {
+//     int display[DISPLAY_WIDTH] = {0};
+//     int map[] = {
+//         1, 1, 1, 1, 1, 1, 1, 1,
+//         1, 0, 1, 0, 0, 0, 0, 1,
+//         1, 0, 1, 0, 1, 0, 0, 1,
+//         1, 0, 1, 1, 1, 0, 0, 1,
+//         1, 0, 0, 0, 0, 0, 0, 1,
+//         1, 0, 0, 0, 0, 1, 0, 1,
+//         1, 0, 0, 0, 0, 0, 0, 1,
+//         1, 1, 1, 1, 1, 1, 1, 1
+//     };
+//     int playerPosX = 54, playerPosY = 54;
+//     float playerDirection = 0;
 
-    // Test:  distance can't be more than DISPLAY_HEIGHT
-    // In the future, display will be a 2D array and only one column will be passed through
-    drawLine(&display, 360, 50);
+//     // Test:  distance can't be more than DISPLAY_HEIGHT
+//     // In the future, display will be a 2D array and only one column will be passed through
+//     castRay(&playerDirection, &playerPosX, &playerPosY, map, 8, display);
 
-    return 0;
-}
+//     return 0;
+// }
