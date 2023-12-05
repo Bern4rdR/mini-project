@@ -1,12 +1,17 @@
 # mini-project
-A gyroscopic game on the ChipKIT Uno32 board
+A potentiometer game on the ChipKIT Uno32 board
 
 ## Table of Contents
 
+- Description
 - Installation
 - Usage
 - Contributing
 - License
+
+## Description
+
+This is a simple maze runner game using ray tracing to display from 2D to 3D and a potentiometer to rotate the player POV. 
 
 ## Installation
 
