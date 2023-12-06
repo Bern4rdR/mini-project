@@ -59,11 +59,29 @@ void delay(int num){
 }
 
 // set all pixels to 0
-void clear_displa(){
+void clear_display(){
     int x, y;
     for (x = 0; x < 128; x++){
         for (y = 0; y < 32; y++){
+			// set all pixels to 0 (off)
             display[x][y] = 0;  
         }
     }
+}
+
+
+void display_string(int line, char *s) {
+	int i;
+	if(line < 0 || line >= 4)
+		return;
+	if(!s)
+		return;
+	
+	for(i = 0; i < 16; i++) 
+		if(*s) {
+			textbuffer[line][i] = *s;
+			s++;
+		} else
+			textbuffer[line][i] = ' ';
+
 }
