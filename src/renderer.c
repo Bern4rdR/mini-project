@@ -51,3 +51,19 @@ void display_update(void) {
 		}
 	}
 }
+
+
+void delay(int num){
+    int i;
+    for(i = 0; i < num; i++);
+}
+
+// set all pixels to 0
+void clear_displa(){
+    int x, y;
+    for (x = 0; x < 128; x++){
+        for (y = 0; y < 32; y++){
+            display[x][y] = 0;  
+        }
+    }
+}
