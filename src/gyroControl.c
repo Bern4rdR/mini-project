@@ -45,3 +45,10 @@ void set_interrupts(void) {
     // set priority of interrupts from the potentiometer
     IPCSET(2) = 0x1c;
 }
+
+void open_ports() {
+    // open the port for button1
+    TRISFSET = 0x2;
+    // open the port for the potentiometer
+    TRISASET = 0x0f00;
+}
