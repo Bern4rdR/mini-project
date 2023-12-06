@@ -7,7 +7,9 @@
 
 
 void main() {
-    // setup/initializse the system and screen
-    // start in main menu
+    init();
+    clear_display();
+    menu(); //
+
     
 }
