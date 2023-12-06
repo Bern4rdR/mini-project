@@ -4,7 +4,7 @@
  * turn in that direction. Pressing button1 will make the player walk forward.
  */
 #include <plib.h> // PIC32 peripheral library
-#include "pic32mx.h"
+#include <pic32mx.h>
 
 
 // math constants
