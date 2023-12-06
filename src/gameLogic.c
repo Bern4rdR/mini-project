@@ -5,16 +5,16 @@
 #define PI 3.14159265358979323846
 
 
-void map() {
-    int mapX=8, mapY=8, mapSize=64;
-    int map[] = {
+void map(int map[], int mapX, int mapY) {
+    int mapSize = mapX * mapY;
+    map = (int[]) {
         1, 1, 1, 1, 1, 1, 1, 1,
         1, 0, 1, 0, 0, 0, 0, 1,
         1, 0, 1, 0, 1, 0, 0, 1,
-        1, 0, 1, 1, 1, 0, 0, 1,
+        1, 0, 1, 1, 0, 0, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 0, 0, 0, 1, 0, 1,
-        1, 0, 0, 0, 0, 0, 0, 1,
+        1, 0, 0, 1, 0, 1, 0, 1,
+        1, 0, 0, 1, 0, 0, 0, 1,
         1, 1, 1, 1, 1, 1, 1, 1
     };
 }
@@ -22,9 +22,4 @@ void map() {
 void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY) {
     *playerPosX += (int)cos(*playerDirection);
     *playerPosY += (int)sin(*playerDirection);
-}
-
-void rotatePlayer(float* playerDirection, int* rotation) {
-    *playerDirection += *rotation;
-    *playerDirection = fmod(*playerDirection, 2*PI);
 }
