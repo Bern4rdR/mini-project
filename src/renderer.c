@@ -158,7 +158,7 @@ void display_string(char textbuffer[4][16], int line, char *s) {
 
 }
 
-const uint_8 const font[] = {
+const uint8_t font[] = {
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
