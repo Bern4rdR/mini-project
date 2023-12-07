@@ -4,6 +4,7 @@
  * and put that signal through to the ChipKIT by activating the display.
  */
 #include <pic32mx.h>
+#include <string.h>
 #include <stdint.h>
 #include "render.h"
 
@@ -124,11 +125,14 @@ void clear_display(){
 	}
 }
 
-void create_textbuffer() {
-	char textbuffer[4][16];
+void create_textbuffer(char textbuffer[4][16]) {
+	strcpy(textbuffer[0], "placeholder text");
+	strcpy(textbuffer[1], "placeholder text");
+	strcpy(textbuffer[2], "placeholder text");
+	strcpy(textbuffer[3], "placeholder text");
 }
 
-void display_string(int line, char *s) {
+void display_string(char textbuffer[4][16], int line, char *s) {
 	int i;
 	if(line < 0 || line >= 4)
 		return;
