@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include "screen.h"
 
 
 /* Draw a vertical line with specified height and opacity
@@ -27,14 +28,18 @@
  * @param opacity:  opacity of the line (0-1)
  */
 void drawLine(char* line[4], float distance, float opacity) {
+    int i;
     // clear column
-    memset(*line, 0, 4 * sizeof(char*));
+    for (i = 0; i < 4; i++) {
+        line[i] = 0;
+    }
+
 
     // calculate the height of the line
     int height = DISPLAY_HEIGHT - (int)distance;
     int dither = height * opacity;
 
-    for (int i = distance/2; i < height; i++) {
+    for (i = distance/2; i < height; i++) {
         if (i % dither) {
             // get the chunk index and bit index of that column
             int char_index = i / BYTE_SIZE;

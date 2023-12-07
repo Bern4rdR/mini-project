@@ -3,8 +3,9 @@
  * that can be used to control the player. Turning the potentiometer will make the player
  * turn in that direction. Pressing button1 will make the player walk forward.
  */
-#include <plib.h> // PIC32 peripheral library
+// #include <plib.h> // PIC32 peripheral library
 #include <pic32mx.h>
+#include "control.h"
 
 
 // math constants
@@ -15,11 +16,11 @@
  * @param walking: pointer to a boolean that indicates if the player is walking or not
  * @param playerDirection: pointer to a float that indicates the direction the player is facing
  */
-void user_isr(bool* walking, float* playerDirection) {
+void user_isr(int* walking, float* playerDirection) {
     // acknowledge interrupt from button1
     if (IFS(0) & 0x100) {
         IFSCLR(0) = 0x100;
-        *walking = !(*walking);
+        *walking = *walking ? 0 : 1;
     }
 
     // acknowledge interrupt from the potentiometer
@@ -46,9 +47,13 @@ void set_interrupts(void) {
     IPCSET(2) = 0x1c;
 }
 
-void open_ports() {
+void open_ports(void) {
     // open the port for button1
     TRISFSET = 0x2;
     // open the port for the potentiometer
     TRISASET = 0x0f00;
+}
+
+int getbtns(void) {
+    return (PORTD >> 5) & 0x7;
 }

@@ -2,7 +2,6 @@
 
 #include "render.h"
 #include "control.h"
-#include "logic.h"
 #include "screen.h"
 
 
@@ -10,7 +9,7 @@ void main() {
     init();
 
     menu();
-    
+
 
     
 }

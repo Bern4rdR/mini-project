@@ -1,0 +1,4 @@
+gyroControl.c.o: gyroControl.c /opt/mcb32tools/include/pic32mx.h \
+ control.h
+gyroControl.c /opt/mcb32tools/include/pic32mx.h :
+ control.h :
