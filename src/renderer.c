@@ -48,7 +48,7 @@ void display_image(int x, unsigned int* data) {
 	}
 }
 
-void display_update(void) {
+void display_update(char textbuffer[4][16]) {
     int i, j, k;
     int c;
     for(i = 0; i < 4; i++) {
@@ -124,23 +124,22 @@ void clear_display(){
 		}
 	}
 }
-
-void strcpy(char* arr, char* str) {
-	int length = sizeof(str)/sizeof(char);
-
-	int i;
-	for (i = 0; i < length; i++) {
-		arr[i] = str[i];
-	}
-
-	arr[length] = '\0';
+void create_textbuffer(char textbuffer[4][16]) {
+	strcopy(textbuffer[1], "placeholder text");
+	strcopy(textbuffer[0], "placeholder text");
+	strcopy(textbuffer[2], "placeholder text");
+	strcopy(textbuffer[3], "placeholder text");
 }
 
-void create_textbuffer(char textbuffer[4][16]) {
-	strcpy(textbuffer[0], "placeholder text");
-	strcpy(textbuffer[1], "placeholder text");
-	strcpy(textbuffer[2], "placeholder text");
-	strcpy(textbuffer[3], "placeholder text");
+void strcopy(char* arr, char* str) {
+    int length = sizeof(str)/sizeof(char);
+
+    int i;
+    for (i = 0; i < length; i++) {
+        arr[i] = str[i];
+    }
+
+    arr[length] = '\0';
 }
 
 void display_string(char textbuffer[4][16], int line, char *s) {

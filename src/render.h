@@ -4,12 +4,12 @@
 
 uint8_t spi_send_recv(uint8_t data);
 void display_image(int x, unsigned int* data);
-void display_update(void);
+void display_update(char textbuffer[4][16]);
 void display_init(void);
 void clear_display();
-void strcpy(char *arr, char *str);
 void create_textbuffer(char textbuffer[4][16]);
-void display_string(int line, char *s);
+void strcopy(char *arr, char *str);
+void display_string(char textbuffer[4][16], int line, char *s);
 
 /* Declare text buffer for display output */
 extern char textbuffer[4][16];
@@ -146,3 +146,4 @@ const uint8_t const font[] = {
 	0, 0, 4, 2, 4, 2, 0, 0,
 	0, 120, 68, 66, 68, 120, 0, 0,
 };
+*/
