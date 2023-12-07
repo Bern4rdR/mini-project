@@ -35,6 +35,7 @@ void drawLine(char* line[4], float distance, float opacity) {
         line[1][i] = 0;
         line[2][i] = 0;
         line[3][i] = 0;
+    }
 
     // calculate the height of the line
     int height = DISPLAY_HEIGHT - (int)distance;
