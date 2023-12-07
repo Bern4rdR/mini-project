@@ -30,12 +30,10 @@
 void drawLine(char* line[4], float distance, float opacity) {
     int i;
     // clear column
-    for (i = 0; i < BYTE_SIZE; i++) {
-        line[0][i] = 0;
-        line[1][i] = 0;
-        line[2][i] = 0;
-        line[3][i] = 0;
+    for (i = 0; i < 4; i++) {
+        line[i] = 0;
     }
+
 
     // calculate the height of the line
     int height = DISPLAY_HEIGHT - (int)distance;
