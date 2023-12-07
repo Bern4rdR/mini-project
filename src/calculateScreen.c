@@ -17,9 +17,9 @@
 
 
 #include <stdio.h>
-#include <math.h>
 #include <string.h>
 #include "screen.h"
+#include "math.h"
 
 
 /* Draw a vertical line with specified height and opacity
