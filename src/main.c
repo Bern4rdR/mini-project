@@ -7,6 +7,7 @@
 
 void main() {
     init();
+    create_textbuffer();
 
     menu();
 
