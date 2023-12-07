@@ -5,12 +5,21 @@
 #include "screen.h"
 
 
+void init() {
+    // initialize the display
+    display_init();
+    // initialize the buttons and potentiometer
+    open_ports();
+    // initialize interrupts
+    set_interrupts();
+
+    // create textbuffer for displaying text
+    create_textbuffer();
+}
+
+
 void main() {
     init();
-    create_textbuffer();
-
-    menu();
-
-
     
+    //menu();
 }
