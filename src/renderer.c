@@ -125,6 +125,17 @@ void clear_display(){
 	}
 }
 
+void strcpy(char* arr, char* str) {
+	int length = sizeof(str)/sizeof(char);
+
+	int i;
+	for (i = 0; i < length; i++) {
+		arr[i] = str[i];
+	}
+
+	arr[length] = '\0';
+}
+
 void create_textbuffer(char textbuffer[4][16]) {
 	strcpy(textbuffer[0], "placeholder text");
 	strcpy(textbuffer[1], "placeholder text");
