@@ -1,6 +1,7 @@
 #define DISPLAY_WIDTH 128
 
 #include <pic32mx.h>
+#include "math.h"
 
 
 void drawLine(char* line[4], float distance, float opacity);
