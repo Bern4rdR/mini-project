@@ -13,7 +13,7 @@
 #define PI 3.1415926535
 #define P2 PI/2
 #define P3 3*PI/2
-#define DR 0.0174532925
+#define DR 0.01745329251
 
 
 #include <stdio.h>
