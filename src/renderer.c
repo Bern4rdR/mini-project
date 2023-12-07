@@ -4,6 +4,8 @@
  * and put that signal through to the ChipKIT by activating the display.
  */
 #include <pic32mx.h>
+#include <stdint.h>
+#include "render.h"
 
 
 // display helper functions
@@ -98,20 +100,28 @@ void display_init(void) {
 	spi_send_recv(0xAF);
 }
 
-void delay(int num){
+void quicksleep(int num){
     int i;
     for(i = 0; i < num; i++);
 }
 
 // set all pixels to 0
 void clear_display(){
-    int x, y;
-    for (x = 0; x < 128; x++){
-        for (y = 0; y < 32; y++){
-			// set all pixels to 0 (off)
-            display[x][y] = 0;  
-        }
-    }
+    int i, j;
+	for(i = 0; i < 4; i++) {
+		DISPLAY_CHANGE_TO_COMMAND_MODE;
+		spi_send_recv(0x22);
+		spi_send_recv(i);
+		
+		spi_send_recv(0x0);
+		spi_send_recv(0x10);
+		DISPLAY_CHANGE_TO_DATA_MODE;
+		
+		for(j = 0; j < 16; j++) {
+			// display works with inverse data (1 is off, 0 is on)
+			spi_send_recv(0x0);
+		}
+	}
 }
 
 void display_string(int line, char *s) {

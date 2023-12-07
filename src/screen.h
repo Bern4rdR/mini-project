@@ -1,3 +1,5 @@
+#define DISPLAY_WIDTH 128
+
 #include <pic32mx.h>
 
 
