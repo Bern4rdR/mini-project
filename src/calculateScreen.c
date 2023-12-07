@@ -28,14 +28,17 @@
  * @param opacity:  opacity of the line (0-1)
  */
 void drawLine(char* line[4], float distance, float opacity) {
+    int i;
     // clear column
-    memset(*line, 0, 4 * sizeof(char*));
+    for (i = 0; i < BYTE_SIZE; i++) {
+        line[0][i] = 0;
+        line[1][i] = 0;
+        line[2][i] = 0;
+        line[3][i] = 0;
 
     // calculate the height of the line
     int height = DISPLAY_HEIGHT - (int)distance;
     int dither = height * opacity;
-
-    int i;
 
     for (i = distance/2; i < height; i++) {
         if (i % dither) {
