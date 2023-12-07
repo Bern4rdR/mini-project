@@ -125,12 +125,7 @@ void clear_display(){
 }
 
 void create_textbuffer() {
-	int i, j;
-	for (i = 0; i < 4; i++) {
-		for (j = 0; j < 16; j++) {
-			textbuffer[i][j] = ' ';
-		}
-	}
+	char textbuffer[4][16];
 }
 
 void display_string(int line, char *s) {
