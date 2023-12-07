@@ -6,6 +6,10 @@ uint8_t spi_send_recv(uint8_t data);
 void display_image(int x, unsigned int* data);
 void display_update(void);
 void display_init(void);
+void clear_display();
+void strcpy(char *arr, char *str);
+void create_textbuffer(char textbuffer[4][16]);
+void display_string(int line, char *s);
 
 /* Declare text buffer for display output */
 extern char textbuffer[4][16];
