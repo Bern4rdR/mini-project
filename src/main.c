@@ -59,6 +59,8 @@ void init() {
     open_ports();
     // initialize interrupts
     set_interrupts();
+
+    clear_display();
 }
 
 
