@@ -76,7 +76,13 @@ void main() {
     display_update(textbuffer);
 
     char display[4][DISPLAY_WIDTH];
-    memset(display, 0, sizeof(display));
+    // clear display
+    int i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < DISPLAY_WIDTH; j++) {
+            display[i][j] = 0;
+        }
+    }
     int map[] = {
         1, 1, 1, 1, 1, 1, 1, 1,
         1, 0, 1, 0, 0, 0, 0, 1,
