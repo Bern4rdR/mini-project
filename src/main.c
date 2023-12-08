@@ -10,13 +10,6 @@
 
 
 void init() {
-    // initialize the display
-    display_init();
-    // initialize the buttons and potentiometer
-    open_ports();
-    // initialize interrupts
-    set_interrupts();
-
     /*
 	  This will set the peripheral bus clock to the same frequency
 	  as the sysclock. That means 80 MHz, when the microcontroller
@@ -58,6 +51,14 @@ void init() {
 	SPI2CONSET = 0x20;
 	/* SPI2CON bit ON = 1; */
 	SPI2CONSET = 0x8000;
+
+    
+    // initialize the display
+    display_init();
+    // initialize the buttons and potentiometer
+    open_ports();
+    // initialize interrupts
+    set_interrupts();
 }
 
 
