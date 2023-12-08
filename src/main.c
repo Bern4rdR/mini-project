@@ -6,6 +6,7 @@
 #include "render.h"
 #include "control.h"
 #include "screen.h"
+#include "math.h"
 
 
 #define DISPLAY_WIDTH 128
