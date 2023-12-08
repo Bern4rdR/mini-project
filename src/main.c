@@ -6,7 +6,7 @@
 #include "screen.h"
 
 
-
+#define DISPLAY_WIDTH 128
 
 
 void init() {
