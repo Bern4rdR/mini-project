@@ -75,5 +75,22 @@ void main() {
 
     display_update(textbuffer);
 
-    //menu();
+    char display[4][DISPLAY_WIDTH];
+    memset(display, 0, sizeof(display));
+    int map[] = {
+        1, 1, 1, 1, 1, 1, 1, 1,
+        1, 0, 1, 0, 0, 0, 0, 1,
+        1, 0, 1, 0, 1, 0, 0, 1,
+        1, 0, 1, 1, 1, 0, 0, 1,
+        1, 0, 0, 0, 0, 0, 0, 1,
+        1, 0, 0, 0, 0, 1, 0, 1,
+        1, 0, 0, 0, 0, 0, 0, 1,
+        1, 1, 1, 1, 1, 1, 1, 1
+    };
+    int playerPosX = 54, playerPosY = 54;
+    float playerDirection = 0;
+
+    castRay(&playerDirection, &playerPosX, &playerPosY, map, 8, display);
+
+    display_update(display);
 }
