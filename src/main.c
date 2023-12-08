@@ -29,5 +29,7 @@ void main() {
 
     display_string(textbuffer, 0, "Hello world!");
 
+    display_update(textbuffer);
+
     //menu();
 }
