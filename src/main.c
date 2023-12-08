@@ -1,4 +1,6 @@
 #include <pic32mx.h>
+#include <stdint.h>
+#include <stdsting.h>
 
 
 #include "render.h"
