@@ -58,8 +58,6 @@ void init() {
     
     // initialize the display
     display_init();
-    // initialize the buttons and potentiometer
-    init_input();
 
     erase_display();
 }
