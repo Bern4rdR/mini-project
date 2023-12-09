@@ -121,7 +121,7 @@ void main() {
         1, 1, 1, 1, 1, 1, 1, 1
     };
     
-    int playerPosX = 54, playerPosY = 54;
+    int playerPosX = 50, playerPosY = 50;
     float playerDirection = 0;
     int walking = 0;
 
