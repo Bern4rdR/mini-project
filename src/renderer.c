@@ -107,23 +107,34 @@ void quicksleep(int num){
 }
 
 // set all pixels to 0
-void clear_display(){
-    int i, j;
-	for(i = 0; i < 4; i++) {
-		DISPLAY_CHANGE_TO_COMMAND_MODE;
-		spi_send_recv(0x22);
-		spi_send_recv(i);
-		
-		spi_send_recv(0x0);
-		spi_send_recv(0x10);
-		DISPLAY_CHANGE_TO_DATA_MODE;
-		
-		for(j = 0; j < 16; j++) {
-			// display works with inverse data (1 is off, 0 is on)
-			spi_send_recv(0x0);
+void clear_display(char textbuffer[4][16]) {
+	int i, j;
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 16; j++) {
+			textbuffer[i][j] = 0;
 		}
 	}
 }
+
+// quite unsure about this one, might even not be needed
+// OBS: if removed then remove it from init() in main.c
+void erase_display(){
+	int i, j;
+	for (i = 0; i < 4; i++) {
+		DISPLAY_CHANGE_TO_COMMAND_MODE;
+		spi_send_recv(0x22);
+		spi_send_recv(i);
+
+		spi_send_recv(0x0);
+		spi_send_recv(0x10);
+		DISPLAY_CHANGE_TO_DATA_MODE;
+
+		for (j = 0; j < 16; j++) {
+			spi_send_recv(0);
+		}
+	}
+}
+
 void create_textbuffer(char textbuffer[4][16]) {
 	strcopy(textbuffer[1], "placeholder text");
 	strcopy(textbuffer[0], "placeholder text");

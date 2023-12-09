@@ -1,8 +1,12 @@
-main.c.o: main.c /opt/mcb32tools/include/pic32mx.h render.h \
+main.c.o: main.c /opt/mcb32tools/include/pic32mx.h \
  /opt/mcb32tools/include/stdint.h \
  /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h \
+ /opt/mcb32tools/include/string.h /opt/mcb32tools/include/klibc/extern.h \
+ /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h render.h \
  control.h screen.h math.h
-main.c /opt/mcb32tools/include/pic32mx.h render.h :
+main.c /opt/mcb32tools/include/pic32mx.h :
  /opt/mcb32tools/include/stdint.h :
  /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
+ /opt/mcb32tools/include/string.h /opt/mcb32tools/include/klibc/extern.h :
+ /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h render.h :
  control.h screen.h math.h :

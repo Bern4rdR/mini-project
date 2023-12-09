@@ -63,7 +63,7 @@ void init() {
     // initialize interrupts
     set_interrupts();
 
-    clear_display();
+    erase_display();
 }
 
 
@@ -74,19 +74,27 @@ void main() {
     // create textbuffer for displaying text
     create_textbuffer(textbuffer);
 
-    display_string(textbuffer, 0, "Hello world!");
+    clear_display(textbuffer);
 
     display_update(textbuffer);
 
+    quicksleep(5000000);
+
+    display_string(textbuffer, 0, "Hello world!");
+
+    display_update(textbuffer);
+    /*
     char display[4][DISPLAY_WIDTH];
     // clear display
+    
     int i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < DISPLAY_WIDTH; j++) {
             display[i][j] = 0;
         }
     }
-    int map[] = {
+    
+    int mapping[64] = {
         1, 1, 1, 1, 1, 1, 1, 1,
         1, 0, 1, 0, 0, 0, 0, 1,
         1, 0, 1, 0, 1, 0, 0, 1,
@@ -96,10 +104,13 @@ void main() {
         1, 0, 0, 0, 0, 0, 0, 1,
         1, 1, 1, 1, 1, 1, 1, 1
     };
+    
     int playerPosX = 54, playerPosY = 54;
+    
     float playerDirection = 0;
 
-    castRay(&playerDirection, &playerPosX, &playerPosY, map, 8, display);
+    castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
     display_update(display);
+    */
 }
