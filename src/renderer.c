@@ -71,6 +71,23 @@ void display_update(char textbuffer[4][16]) {
 	}
 }
 
+void render_display(char display[4][128]) {
+	int i, j;
+	for (i = 0; i < 4; i++) {
+		DISPLAY_CHANGE_TO_COMMAND_MODE;
+		spi_send_recv(0x22);
+		spi_send_recv(i);
+
+		spi_send_recv(0x0);
+		spi_send_recv(0x10);
+		DISPLAY_CHANGE_TO_DATA_MODE;
+
+		for (j = 0; j < 128; j++) {
+			spi_send_recv(display[i][j]);
+		}
+	}
+}
+
 void display_init(void) {
         DISPLAY_CHANGE_TO_COMMAND_MODE;
 	quicksleep(10);
