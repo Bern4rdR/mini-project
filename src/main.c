@@ -93,7 +93,7 @@ void main() {
 
     
     // while (1) {
-    //     if (getbtns() & 0x8) {
+    //     if ((getbtns() >> 4) & 1) {
     //         display_string(textbuffer, 2, "BTN4 pressed");
     //         display_update(textbuffer);
     //         break;
@@ -107,33 +107,33 @@ void main() {
 
 
     
-    // char display[4][128];
-    // // clear display
+    char display[4][128];
+    // clear display
     
-    // int i, j;
-    // for (i = 0; i < 4; i++) {
-    //     for (j = 0; j < 128; j++) {
-    //         display[i][j] = 0;
-    //     }
-    // }
+    int i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 128; j++) {
+            display[i][j] = 0;
+        }
+    }
     
-    // int mapping[64] = {
-    //     1, 1, 1, 1, 1, 1, 1, 1,
-    //     1, 0, 1, 0, 0, 0, 0, 1,
-    //     1, 0, 1, 0, 1, 0, 0, 1,
-    //     1, 0, 1, 1, 1, 0, 0, 1,
-    //     1, 0, 0, 0, 0, 0, 0, 1,
-    //     1, 0, 0, 0, 0, 1, 0, 1,
-    //     1, 0, 0, 0, 0, 0, 0, 1,
-    //     1, 1, 1, 1, 1, 1, 1, 1
-    // };
+    int mapping[64] = {
+        1, 1, 1, 1, 1, 1, 1, 1,
+        1, 0, 1, 0, 0, 0, 0, 1,
+        1, 0, 1, 0, 1, 0, 0, 1,
+        1, 0, 1, 1, 1, 0, 0, 1,
+        1, 0, 0, 0, 0, 0, 0, 1,
+        1, 0, 0, 0, 0, 1, 0, 1,
+        1, 0, 0, 0, 0, 0, 0, 1,
+        1, 1, 1, 1, 1, 1, 1, 1
+    };
     
-    // int playerPosX = 54, playerPosY = 54;
+    int playerPosX = 27, playerPosY = 27;
     
-    // float playerDirection = 0;
+    float playerDirection = 0;
 
-    // castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
+    castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
-    // //display_update(display);
+    render_display(display);
     
 }
