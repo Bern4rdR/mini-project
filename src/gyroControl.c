@@ -29,25 +29,25 @@ void user_input(int* walking, float* playerDirection) {
     }
 
     // convert to a float between 0 and 1
-    float potentiometerFloat = (float)readADC() / 1023;
+    //float potentiometerFloat = (float)readADC() / 1023;
     // convert to a float between 0 and 2pi
-    *playerDirection = potentiometerFloat * 2 * PI;
+    //*playerDirection = potentiometerFloat * 2 * PI;
 }
-void initADC() {
-    AD1CON1 = 0x00E0; // automatic conversion after sampling
-    AD1CHS = 0x0000; // connect AN0 as S/H input
-    AD1CSSL = 0;
-    AD1CON3 = 0x1F02; // Tad = 2 Tcy
-    AD1CON2 = 0;
-}
+// void initADC() {
+//     AD1CON1 = 0x00E0; // automatic conversion after sampling
+//     AD1CHS = 0x0000; // connect AN0 as S/H input
+//     AD1CSSL = 0;
+//     AD1CON3 = 0x1F02; // Tad = 2 Tcy
+//     AD1CON2 = 0;
+// }
 
-int readADC() {
-    AD1CON1bits.SAMP = 1; // start sampling, then go to conversion
+// int readADC() {
+//     AD1CON1bits.SAMP = 1; // start sampling, then go to conversion
 
-    while (!AD1CON1bits.DONE); // wait until conversion is done
+//     while (!AD1CON1bits.DONE); // wait until conversion is done
 
-    return ADC1BUF0; // read the buffer with the result
-}
+//     return ADC1BUF0; // read the buffer with the result
+// }
 
 int getbtns(void) {
     // returns the value of the buttons

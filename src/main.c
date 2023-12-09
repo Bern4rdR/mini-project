@@ -61,7 +61,7 @@ void init() {
     erase_display();
 
     // initialize the ADC module (to read potentiometer)
-    initADC();
+    //initADC();
 }
 
 
@@ -113,8 +113,8 @@ void main() {
     int mapping[64] = {
         1, 1, 1, 1, 1, 1, 1, 1,
         1, 0, 1, 0, 0, 0, 0, 1,
-        1, 0, 1, 0, 1, 0, 0, 1,
-        1, 0, 1, 1, 1, 0, 0, 1,
+        1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 1, 1, 1, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
         1, 0, 0, 0, 0, 1, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
