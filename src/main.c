@@ -81,17 +81,15 @@ void main() {
 
     quicksleep(5000);
 
+    // MENU 
+
     display_string(textbuffer, 0, "Maze Runner");
-    //display_string(textbuffer, 1, "            ");
+    
     display_string(textbuffer, 2, "Press BTN4");
     display_string(textbuffer, 3, "to start");
 
     display_update(textbuffer);
 
-    
-    // button change - WIP
-
-    
     while (1) {
         // if button 4 is pressed - start game
         if (getbtns() & 0x4) {
@@ -102,10 +100,8 @@ void main() {
         }
     }
    
+    // GAME
 
-    
-
-    
     char display[4][DISPLAY_WIDTH];
     // clear display
     
