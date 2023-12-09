@@ -69,6 +69,7 @@ void init() {
 
 void main() {
     char textbuffer[4][16];
+
     init();
 
     // create textbuffer for displaying text
@@ -80,10 +81,22 @@ void main() {
 
     quicksleep(5000000);
 
-    display_string(textbuffer, 0, "Hello world!");
+    display_string(textbuffer, 0, "Maze Runner");
+    
+    display_string(textbuffer, 2, "Press BTN4");
+    display_string(textbuffer, 3, "to start");
+
+    /*
+    while ((getbtns() = 0x8) == 0) {
+        display_update(textbuffer);
+    }
+    */
 
     display_update(textbuffer);
-    /*
+
+
+
+    
     char display[4][DISPLAY_WIDTH];
     // clear display
     
@@ -112,5 +125,5 @@ void main() {
     castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
     display_update(display);
-    */
+    
 }

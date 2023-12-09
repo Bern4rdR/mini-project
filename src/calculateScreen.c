@@ -23,17 +23,17 @@
 
 
 /* Draw a vertical line with specified height and opacity
- * @param display:  the display on which the line will be drawn
- * @param col:      the column on which the line will be drawn
+ * @param line:     pointer to the line to be drawn
  * @param distance: distance to the wall
  * @param opacity:  opacity of the line (0-1)
  */
-void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opacity) {
+void drawLine(char* line[4], float distance, float opacity) {
     int i;
     // clear column
     for (i = 0; i < 4; i++) {
-        display[i][col] = 0;
+        line[i] = 0;
     }
+
 
     // calculate the height of the line
     int height = DISPLAY_HEIGHT - (int)distance;
@@ -46,7 +46,7 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
             int bit_index = i % BYTE_SIZE;
 
             // set the bit
-            display[char_index][col] |= 1 << bit_index;
+            *line[char_index] |= 1 << bit_index;
         }
     }
 }
@@ -156,7 +156,8 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         if(disH < disV) {rayX=hx; rayY=hy; disT=disH; }//side=1;}
 
         // Draw one line of the wall
-        drawLine(display, r, disT, 1);
+        char* column[4] = {&display[0][r], &display[1][r], &display[2][r], &display[3][r]};
+        drawLine(column, disT, 1);
 
 
         rayDirection += DR;
