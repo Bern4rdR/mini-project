@@ -59,9 +59,7 @@ void init() {
     // initialize the display
     display_init();
     // initialize the buttons and potentiometer
-    //open_ports();
-    // initialize interrupts
-    //set_interrupts();
+    init_input();
 
     erase_display();
 }
@@ -131,7 +129,7 @@ void main() {
     while (1) {
         castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
-        user_isr(&walking, &playerDirection);
+        user_input(&walking, &playerDirection);
 
         if (walking) {
             movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);

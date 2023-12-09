@@ -16,12 +16,20 @@
 #define POTENTIOMETER A0
 
 
+void init_input() {
+    // Initialize serial communication at 9600 baud
+    UARTConfigure(UART1, UART_ENABLE_PINS_TX_RX_ONLY);
+    UARTSetLineControl(UART1, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE | UART_STOP_BITS_1);
+    UARTSetDataRate(UART1, GetPeripheralClock(), 9600);
+    UARTEnable(UART1, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
+}
+
 /* Handle the inputs from the user, by reading the potentiometer and
  * the buttons and setting the status accordingly
  * @param walking: pointer to a boolean that indicates if the player is walking or not
  * @param playerDirection: pointer to a float that indicates the direction the player is facing
  */
-void user_isr(int* walking, float* playerDirection) {
+void user_input(int* walking, float* playerDirection) {
     if (getbtns() & BTN4) {
         *walking = *walking ? 0 : 1;
     }
