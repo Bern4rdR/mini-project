@@ -92,13 +92,13 @@ void main() {
     // button change - WIP
 
     
-    // while (1) {
-    //     if ((getbtns() >> 4) & 1) {
-    //         display_string(textbuffer, 2, "BTN4 pressed");
-    //         display_update(textbuffer);
-    //         break;
-    //     }
-    // }
+    while (1) {
+        if ((getbtns() >> 4) & 1) {
+            display_string(textbuffer, 2, "BTN4 pressed");
+            display_update(textbuffer);
+            break;
+        }
+    }
    
 
     
