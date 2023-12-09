@@ -59,9 +59,9 @@ void init() {
     // initialize the display
     display_init();
     // initialize the buttons and potentiometer
-    open_ports();
+    //open_ports();
     // initialize interrupts
-    set_interrupts();
+    //set_interrupts();
 
     erase_display();
 }
