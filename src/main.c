@@ -107,12 +107,12 @@ void main() {
 
 
     
-    char display[4][128];
+    char display[4][DISPLAY_WIDTH];
     // clear display
     
     int i, j;
     for (i = 0; i < 4; i++) {
-        for (j = 0; j < 128; j++) {
+        for (j = 0; j < DISPLAY_WIDTH; j++) {
             display[i][j] = 0;
         }
     }
@@ -129,11 +129,21 @@ void main() {
     };
     
     int playerPosX = 27, playerPosY = 27;
-    
     float playerDirection = 0;
+    int walking = 0;
 
-    castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
+    // game loop
+    while (1) {
+        castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
-    render_display(display);
+        user_isr(&walking, &playerDirection);
+
+        if (walking) {
+            movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
+        }
+
+        render_display(display);
+    }
+   
     
 }
