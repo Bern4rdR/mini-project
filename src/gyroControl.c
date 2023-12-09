@@ -13,7 +13,7 @@
 
 // pin constants
 #define BTN4 0x4
-#define POTENTIOMETER 0
+#define POTENTIOMETER 14
 
 
 
@@ -28,28 +28,33 @@ void user_input(int* walking, float* playerDirection) {
     }
 
     // convert to a float between 0 and 1
-    float potentiometerFloat = (float)analogRead(A0) / 1023;
+    float potentiometerFloat = (float)readADC() / 1023;
     // convert to a float between 0 and 2pi
     *playerDirection = potentiometerFloat * 2 * PI;
 }
+void initADC() {
+    // Configure the ADC module
+    AD1PCFG = 0xFFFB; // All PORTB = Digital; RB2 = analog
+    AD1CON1 = 0x0000; // SAMP bit = 0 ends sampling ...
+    // and starts converting
+    AD1CHS = POTENTIOMETER << 16; // Connect RB2/AN2 as CH0 input ..
+    // in this example RB2/AN2 is the input
+    AD1CSSL = 0;
+    AD1CON3 = 0x0002; // Manual Sample, Tad = internal 6 TPB
+    AD1CON2 = 0;
+    AD1CON1SET = 0x8000; // turn ADC ON
+}
 
-// Initialize the ADC module to read the potentiometer value
-// void initADC() {
-//     AD1PCFG = 0xFFFB; // Set PORTB<2> as analog input
-//     AD1CON1 = 0x00E0; // Set auto-convert mode
-//     AD1CSSL = 0; // No scanning required
-//     AD1CON2 = 0; // Use MUXA, AVss and AVdd as Vref
-//     AD1CON3 = 0x1F3F; // Set Tad and sample time
-//     AD1CON1SET = 0x8000; // Enable the ADC module
-// }
-
-// Read the ADC value from channel 2 (AN2)
-// int readADC() {
-//   AD1CHSbits.CH0SA = 2; // Select AN2 as input
-//   AD1CON1bits.SAMP = 1; // Start sampling
-//   while (!AD1CON1bits.DONE); // Wait for conversion to finish
-//   return ADC1BUF0; // Return the ADC value
-// }
+int readADC() {
+    int elapsed = 0, finish_time = 0;
+    AD1CON1bits.SAMP = 1;            // start sampling ...
+    elapsed = _CP0_GET_COUNT(); // get current timer count
+    finish_time = elapsed + SAMPLE_TIME; // Set finish time
+    while (_CP0_GET_COUNT() < finish_time); // sample for more than 250 ns
+    AD1CON1bits.SAMP = 0; // stop sampling and start converting
+    while (!AD1CON1bits.DONE); // wait for the conversion process to finish
+    return ADC1BUF0; // read the buffer with the result
+}
 
 int getbtns(void) {
     // returns the value of the buttons
