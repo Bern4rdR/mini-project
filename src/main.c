@@ -64,7 +64,6 @@ void init() {
     initADC();
 }
 
-
 void main() {
     char textbuffer[4][16];
 
@@ -89,11 +88,13 @@ void main() {
     display_update(textbuffer);
 
     while (1) {
-        // if button 4 is pressed - start game
+        // if button 1 is pressed - start game
         if (getbtns() & 0x4) {
             display_string(textbuffer, 1, "BTN4 pressed");
             display_update(textbuffer);
-            quicksleep(5000000);
+            quicksleep(500000);
+            clear_display(textbuffer);
+            display_update(textbuffer);
             break;
         }
     }
@@ -121,23 +122,23 @@ void main() {
         1, 1, 1, 1, 1, 1, 1, 1
     };
     
-    int playerPosX = 50, playerPosY = 50;
+    int playerPosX = 54, playerPosY = 54;
     float playerDirection = 0;
     int walking = 0;
 
-    // game loop
-    while (1) {
-        castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
-        user_isr(&walking, &playerDirection);
+    // need to check if the potentiometer is turning
 
-        if (walking) {
-            movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
-        }
+    // // game loop
+    // while (1) {
+    //     castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display)
 
-        render_display(display);
-        quicksleep(100000);
-    }
-   
-    
+    //     user_isr(&walking, &playerDirection);
+
+    //     if (walking) {
+    //         movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
+    //     }
+    //     render_display(display);
+    //     quicksleep(100000);
+    // }
 }
