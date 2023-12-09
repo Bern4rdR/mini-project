@@ -17,7 +17,7 @@
 
 
 #include <stdio.h>
-#include <string.h>
+//#include <string.h>
 #include "screen.h"
 #include "math.h"
 

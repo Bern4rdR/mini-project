@@ -1,6 +1,6 @@
 #include <pic32mx.h>
 #include <stdint.h>
-#include <string.h>
+//#include <string.h>
 
 
 #include "render.h"
@@ -79,51 +79,61 @@ void main() {
 
     display_update(textbuffer);
 
-    quicksleep(5000000);
+    quicksleep(50000);
 
     display_string(textbuffer, 0, "Maze Runner");
-    
+    //display_string(textbuffer, 1, "            ");
     display_string(textbuffer, 2, "Press BTN4");
     display_string(textbuffer, 3, "to start");
 
-    /*
-    while ((getbtns() = 0x8) == 0) {
-        display_update(textbuffer);
-    }
-    */
-
     display_update(textbuffer);
 
+    
+    // button change - WIP
+
+    
+    // while (1) {
+    //     if (getbtns() & 0x8) {
+    //         display_string(textbuffer, 2, "BTN4 pressed");
+    //         display_update(textbuffer);
+    //         break;
+    //     }
+    // }
+   
+
+    
+
+
 
 
     
-    char display[4][DISPLAY_WIDTH];
-    // clear display
+    // char display[4][128];
+    // // clear display
     
-    int i, j;
-    for (i = 0; i < 4; i++) {
-        for (j = 0; j < DISPLAY_WIDTH; j++) {
-            display[i][j] = 0;
-        }
-    }
+    // int i, j;
+    // for (i = 0; i < 4; i++) {
+    //     for (j = 0; j < 128; j++) {
+    //         display[i][j] = 0;
+    //     }
+    // }
     
-    int mapping[64] = {
-        1, 1, 1, 1, 1, 1, 1, 1,
-        1, 0, 1, 0, 0, 0, 0, 1,
-        1, 0, 1, 0, 1, 0, 0, 1,
-        1, 0, 1, 1, 1, 0, 0, 1,
-        1, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 0, 0, 0, 1, 0, 1,
-        1, 0, 0, 0, 0, 0, 0, 1,
-        1, 1, 1, 1, 1, 1, 1, 1
-    };
+    // int mapping[64] = {
+    //     1, 1, 1, 1, 1, 1, 1, 1,
+    //     1, 0, 1, 0, 0, 0, 0, 1,
+    //     1, 0, 1, 0, 1, 0, 0, 1,
+    //     1, 0, 1, 1, 1, 0, 0, 1,
+    //     1, 0, 0, 0, 0, 0, 0, 1,
+    //     1, 0, 0, 0, 0, 1, 0, 1,
+    //     1, 0, 0, 0, 0, 0, 0, 1,
+    //     1, 1, 1, 1, 1, 1, 1, 1
+    // };
     
-    int playerPosX = 54, playerPosY = 54;
+    // int playerPosX = 54, playerPosY = 54;
     
-    float playerDirection = 0;
+    // float playerDirection = 0;
 
-    castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
+    // castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
-    display_update(display);
+    // //display_update(display);
     
 }

@@ -54,6 +54,8 @@ void open_ports(void) {
     TRISASET = 0x0f00;
 }
 
+
 int getbtns(void) {
+    // returns the value of the buttons
     return (PORTD >> 5) & 0x7;
 }
