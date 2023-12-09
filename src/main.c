@@ -79,7 +79,7 @@ void main() {
 
     display_update(textbuffer);
 
-    quicksleep(50000);
+    quicksleep(5000);
 
     display_string(textbuffer, 0, "Maze Runner");
     //display_string(textbuffer, 1, "            ");
@@ -93,18 +93,17 @@ void main() {
 
     
     while (1) {
-        if ((getbtns() >> 4) & 1) {
-            display_string(textbuffer, 2, "BTN4 pressed");
+        // if button 4 is pressed - start game
+        if (getbtns() & 0x4) {
+            display_string(textbuffer, 1, "BTN4 pressed");
             display_update(textbuffer);
+            quicksleep(5000000);
             break;
         }
     }
    
 
     
-
-
-
 
     
     char display[4][DISPLAY_WIDTH];
@@ -128,7 +127,7 @@ void main() {
         1, 1, 1, 1, 1, 1, 1, 1
     };
     
-    int playerPosX = 27, playerPosY = 27;
+    int playerPosX = 54, playerPosY = 54;
     float playerDirection = 0;
     int walking = 0;
 
