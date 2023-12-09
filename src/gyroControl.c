@@ -28,9 +28,13 @@ void user_input(int* walking, float* playerDirection) {
     }
 
     // convert to a float between 0 and 1
-    float potentiometerFloat = (float)ReadADC10(POTENTIOMETER) / 1023;
+    float potentiometerFloat = (float)getPotentiometer(POTENTIOMETER) / 1023;
     // convert to a float between 0 and 2pi
     *playerDirection = potentiometerFloat * 2 * PI;
+}
+
+int getPotentiometer(int pin) {
+    return *(ADC1BUF0 + pin * 4);
 }
 
 int getbtns(void) {
