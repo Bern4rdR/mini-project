@@ -5,7 +5,6 @@
  */
 // #include <plib.h> // PIC32 peripheral library
 #include <pic32mx.h>
-#include <p32xxxx.h>
 #include "control.h"
 
 // math constants
