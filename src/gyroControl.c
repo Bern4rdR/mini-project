@@ -28,25 +28,41 @@ void user_isr(int* walking, float* playerDirection) {
     }
 
     // convert to a float between 0 and 1
-    //float potentiometerFloat = (float)readADC() / 1023;
+    float potentiometerFloat = (float)readADC() / 1023;
     // convert to a float between 0 and 2pi
-    //*playerDirection = potentiometerFloat * 2 * PI;
+    *playerDirection = potentiometerFloat * 2 * PI;
 }
-// void initADC() {
-//     AD1CON1 = 0x00E0; // automatic conversion after sampling
-//     AD1CHS = 0x0000; // connect AN0 as S/H input
-//     AD1CSSL = 0;
-//     AD1CON3 = 0x1F02; // Tad = 2 Tcy
-//     AD1CON2 = 0;
-// }
+void initADC() {
+    /* PORTB.2 is analog pin with potentiometer*/
+	AD1PCFG = ~(1 << 2);
+	TRISBSET = (1 << 2);
+	/* Use pin 2 for positive */
+	AD1CHS = (0x2 << 16);
+	
+	/* Data format in uint32, 0 - 1024
+	Manual sampling, auto conversion when sampling is done
+	FORM = 0x4; SSRC = 0x7; CLRASAM = 0x0; ASAM = 0x0; */
+	AD1CON1 = (0x4 << 8) | (0x7 << 5);
+	
+	AD1CON2 = 0x0;
+	AD1CON3 |= (0x1 << 15);
+	
+	/* Set up output pins */
+	ODCE = 0x0;
+	TRISECLR = 0xFF;
+	
+	/* Turn on ADC */
+	AD1CON1 |= (0x1 << 15);
+}
 
-// int readADC() {
-//     AD1CON1bits.SAMP = 1; // start sampling, then go to conversion
+int readADC() {
+    /* Start sampling, wait until conversion is done */
+    AD1CON1 |= (0x1 << 1);
+    while(!(AD1CON1 & (0x1 << 1)));
+    while(!(AD1CON1 & 0x1));
 
-//     while (!AD1CON1bits.DONE); // wait until conversion is done
-
-//     return ADC1BUF0; // read the buffer with the result
-// }
+    return ADC1BUF0; // read the buffer with the result
+}
 
 int getbtns(void) {
     // returns the value of the buttons
