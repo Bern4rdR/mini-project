@@ -136,6 +136,7 @@ void main() {
         }
 
         render_display(display);
+        quicksleep(100000);
     }
    
     
