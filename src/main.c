@@ -129,7 +129,7 @@ void main() {
     while (1) {
         castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
-        user_input(&walking, &playerDirection);
+        user_isr(&walking, &playerDirection);
 
         if (walking) {
             movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);

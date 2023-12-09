@@ -22,7 +22,7 @@
  * @param walking: pointer to a boolean that indicates if the player is walking or not
  * @param playerDirection: pointer to a float that indicates the direction the player is facing
  */
-void user_input(int* walking, float* playerDirection) {
+void user_isr(int* walking, float* playerDirection) {
     if (getbtns() & BTN4) {
         *walking = *walking ? 0 : 1;
     }
