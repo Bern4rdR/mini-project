@@ -58,8 +58,10 @@ void init() {
     
     // initialize the display
     display_init();
-
     erase_display();
+
+    // initialize the ADC module (to read potentiometer)
+    initADC();
 }
 
 
