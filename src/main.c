@@ -96,6 +96,8 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
             display_string(textbuffer, 4, "[Map 2]");
             *map_select = 1;
         }
+
+        display_update(textbuffer);
         
         // if button 4 is pressed - start game
         if (getbtns() & 0x4) {
