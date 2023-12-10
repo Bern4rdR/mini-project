@@ -74,7 +74,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
     rayDirection = range_reduce(rayDirection);
 
     // Cast rays
-    for (r = (DISPLAY_WIDTH - 1); r >= 0; r++) {
+    for (r = 0; r < DISPLAY_WIDTH r++) {
         // Check horizontal lines
         dof = 0;
         float disH=1000000, hx=*playerPosX, hy=*playerPosY;
@@ -163,10 +163,10 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         // ca = range_reduce(ca);
         // disT = disT * cos(ca);
         // Draw one line of the wall
-        drawLine(display, r, disT, opacity);
+        drawLine(display, ((DISPLAY_WIDTH - r) - 1), disT, opacity);
 
 
-        rayDirection -= DR;
+        rayDirection += DR;
         rayDirection = range_reduce(rayDirection);
     }
 }
