@@ -43,10 +43,10 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
     int dither = height * opacity;
 
     int top = (DISPLAY_HEIGHT - height)/2;
-    int bottom = (DISPLAY_HEIGHT + height)/2;
+    int bot = (DISPLAY_HEIGHT + height)/2;
 
     // writes from the top to the bottom
-    for (i = top; i < bottom; i++) {
+    for (i = top; i < bot; i++) {
         if (i % dither) {
             // get the chunk index and bit index of that column
             int char_index = i / BYTE_SIZE;
@@ -72,7 +72,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
     // Draw the wall
     int r, mx, my, mp, dof;
     float rayX, rayY, rayDirection, xo, yo, disT;
-    rayDirection = *playerDirection - DR;
+    rayDirection = *playerDirection - DR * DISPLAY_WIDTH/2;
     if (rayDirection < 0) {
         rayDirection += 2*PI;
     }
@@ -124,13 +124,13 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         dof = 0;
         float disV=1000000, vx=*playerPosX, vy=*playerPosY;
         float nTan = -tan(rayDirection);
-        if (rayDirection > PI/2 && rayDirection < 3*PI/2) {
+        if (rayDirection > P2 && rayDirection < P3) {
             rayX = (((int)*playerPosX >> 6) << 6) - 0.0001;
             rayY = (*playerPosX - rayX) * nTan + *playerPosY;
             xo = -64;
             yo = -xo * nTan;
         }
-        if (rayDirection < PI/2 || rayDirection > 3*PI/2) {
+        if (rayDirection < P2 || rayDirection > P3) {
             rayX = (((int)*playerPosX >> 6) << 6) + 64;
             rayY = (*playerPosX - rayX) * nTan + *playerPosY;
             xo = 64;
