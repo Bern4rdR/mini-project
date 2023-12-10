@@ -23,7 +23,7 @@ float sin(float rad){
     float sin = rad;
     float term = rad;
     int i;
-    for(i = 1; i < 10; i++) {
+    for(i = 1; i < 50; i++) {
         term *= -1 * rad * rad / ((2 * i + 1) * (2 * i));
         sin += term;
     }
