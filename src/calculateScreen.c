@@ -93,13 +93,13 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         if (rayDirection > PI) {
             rayY = (((int)*playerPosY >> 6) << 6) - 0.0001;
             rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
-            yo = -64;
+            yo = -8;
             xo = -yo * aTan;
         }
         if (rayDirection < PI) {
-            rayY = (((int)*playerPosY >> 6) << 6) + 64;
+            rayY = (((int)*playerPosY >> 6) << 6) + 8;
             rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
-            yo = 64;
+            yo = 8;
             xo = -yo * aTan;
         }
         if (rayDirection == 0 || rayDirection == PI) {
@@ -133,13 +133,13 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         if (rayDirection > P2 && rayDirection < P3) {
             rayX = (((int)*playerPosX >> 6) << 6) - 0.0001;
             rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
-            xo = -64;
+            xo = -8;
             yo = -xo * nTan;
         }
         if (rayDirection < P2 || rayDirection > P3) {
-            rayX = (((int)*playerPosX >> 6) << 6) + 64;
+            rayX = (((int)*playerPosX >> 6) << 6) + 8;
             rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
-            xo = 64;
+            xo = 8;
             yo = -xo * nTan;
         }
         if (rayDirection == 0 || rayDirection == PI) {
