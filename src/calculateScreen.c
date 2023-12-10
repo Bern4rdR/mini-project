@@ -74,7 +74,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
     rayDirection = range_reduce(rayDirection);
 
     // Cast rays
-    for (r = 0; r < DISPLAY_WIDTH r++) {
+    for (r = 0; r < DISPLAY_WIDTH; r++) {
         // Check horizontal lines
         dof = 0;
         float disH=1000000, hx=*playerPosX, hy=*playerPosY;
