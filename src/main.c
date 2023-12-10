@@ -110,6 +110,10 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
     }
 }
 
+int within_margin(float value, float target, float margin) {
+    return (value > target - margin && value < target + margin);
+}
+
 void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
     int playerPosX = 10, playerPosY = 27;
     float playerDirection = 0;
@@ -126,42 +130,7 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
         user_isr(&walking, &playerDirection);
 
         if (getbtns() & 0x2) {
-            //movePlayer(&playerDirection, &playerPosX, &playerPosY, map, mapSize);
-            // determine direction of player
-            int moveX = cos(playerDirection) + 0.5; // roundabout way of rounding to the nearest integer
-            int moveY = sin(playerDirection) + 0.5;
-
-            // use moveX and moveY to determine the direction of the player (8 possibilities)
-            // down is positive, right is positive
-            if (moveX > 0 && moveY > 0) {
-                // player is moving up and right
-                playerPosX += 1;
-                playerPosY += 1;
-            } else if (moveX > 0 && moveY < 0) {
-                // player is moving down and right
-                playerPosX += 1;
-                playerPosY -= 1;
-            } else if (moveX < 0 && moveY > 0) {
-                // player is moving up and left
-                playerPosX -= 1;
-                playerPosY += 1;
-            } else if (moveX < 0 && moveY < 0) {
-                // player is moving down and left
-                playerPosX -= 1;
-                playerPosY -= 1;
-            } else if (moveX > 0 && moveY == 0) {
-                // player is moving right
-                playerPosX += 1;
-            } else if (moveX < 0 && moveY == 0) {
-                // player is moving left
-                playerPosX -= 1;
-            } else if (moveX == 0 && moveY > 0) {
-                // player is moving up
-                playerPosY += 1;
-            } else if (moveX == 0 && moveY < 0) {
-                // player is moving down
-                playerPosY -= 1;
-            }
+            movePlayer(&playerDirection, &playerPosX, &playerPosY, map, mapSize);
         }
 
         render_display(display);
