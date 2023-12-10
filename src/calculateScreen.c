@@ -91,13 +91,13 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         float disH=1000000, hx=*playerPosX, hy=*playerPosY;
         float aTan = -1/tan(rayDirection);
         if (rayDirection > PI) {
-            rayY = (((int)*playerPosY >> 6) << 6) - 0.0001;
+            rayY = (((int)*playerPosY >> 3) << 3) - 0.0001;
             rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
             yo = -8;
             xo = -yo * aTan;
         }
         if (rayDirection < PI) {
-            rayY = (((int)*playerPosY >> 6) << 6) + 8;
+            rayY = (((int)*playerPosY >> 3) << 3) + 8;
             rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
             yo = 8;
             xo = -yo * aTan;
@@ -110,8 +110,8 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
 
         // currently stuck in infinite loop, need to fix
         while(dof < 8) {
-            mx = (int)(rayX) >> 6;
-            my = (int)(rayY) >> 6;
+            mx = (int)(rayX) >> 3;
+            my = (int)(rayY) >> 3;
             mp = (my * mapSize) + mx;
             if (mp > 0 && mp < mapSize * mapSize && map[mp] != 0) {
                 // hit wall
@@ -131,13 +131,13 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         float disV=1000000, vx=*playerPosX, vy=*playerPosY;
         float nTan = -tan(rayDirection);
         if (rayDirection > P2 && rayDirection < P3) {
-            rayX = (((int)*playerPosX >> 6) << 6) - 0.0001;
+            rayX = (((int)*playerPosX >> 3) << 3) - 0.0001;
             rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
             xo = -8;
             yo = -xo * nTan;
         }
         if (rayDirection < P2 || rayDirection > P3) {
-            rayX = (((int)*playerPosX >> 6) << 6) + 8;
+            rayX = (((int)*playerPosX >> 3) << 3) + 8;
             rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
             xo = 8;
             yo = -xo * nTan;
@@ -149,8 +149,8 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         }
         
         while (dof < 8) {
-            mx = (int)(rayX) >> 6;
-            my = (int)(rayY) >> 6;
+            mx = (int)(rayX) >> 3;
+            my = (int)(rayY) >> 3;
             mp = (my * mapSize) + mx;
             if (mp > 0 && mp < mapSize * mapSize && map[mp] != 0) {
                 // hit wall
