@@ -6,4 +6,5 @@
 
 void drawLine(char display[4][128], int col, float distance, float opacity);
 void castRay(float* playerDirection, int*playerPosX, int* playerPosY, int map[], int mapSize, char display[4][DISPLAY_WIDTH]);
+int within_margin(float value, float target, float margin);
 void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize);

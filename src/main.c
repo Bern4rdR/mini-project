@@ -110,13 +110,9 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
     }
 }
 
-int within_margin(float value, float target, float margin) {
-    return (value > target - margin && value < target + margin);
-}
-
 void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
     int playerPosX = 10, playerPosY = 27;
-    float playerDirection = 0;
+    float playerDirection = 3*PI/4;
     int walking = 0;
     int mapSize = 8;
 

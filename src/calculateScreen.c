@@ -171,6 +171,12 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
     }
 }
 
+
+int within_margin(float value, float target, float margin) {
+    return (value > target - margin && value < target + margin);
+}
+
+
 /* Move the player in the directino they are facing
  * @param playerDirection: pointer to the player's direction
  * @param playerPosX:      pointer to the player's x position
@@ -189,16 +195,16 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
         moveY =  1;
     } else if (within_margin(*playerDirection, 3*PI/4, margin)) {
         // player is moving down and right
-        moveX =  1;
-        moveY = -1;
+        moveX = -1;
+        moveY =  1;
     } else if (within_margin(*playerDirection, 5*PI/4, margin)) {
         // player is moving down and left
         moveX = -1;
         moveY = -1;
     } else if (within_margin(*playerDirection, 7*PI/4, margin)) {
         // player is moving up and left
-        moveX = -1;
-        moveY =  1;
+        moveX =  1;
+        moveY = -1;
     } else if (within_margin(*playerDirection, 0, margin)) {
         // player is moving right
         moveX =  1;
@@ -213,9 +219,12 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
         moveY = -1;
     }
 
-    // check for collisions before moving
-    if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
-        *playerPosX += moveX;
-        *playerPosY += moveY;
-    }
+    *playerPosX += moveX;
+    *playerPosY += moveY;
+
+    // // check for collisions before moving
+    // if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
+    //     *playerPosX += moveX;
+    //     *playerPosY += moveY;
+    // }
 }
