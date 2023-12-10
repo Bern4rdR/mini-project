@@ -73,7 +73,7 @@ void init() {
     initTimer();
 }
 
-void menu_loop(int* map_select) {
+void menu_loop(int* map_select, char textbuffer[4][16]) {
     // MENU 
     display_string(textbuffer, 0, "Maze Runner");
 
@@ -189,7 +189,7 @@ void main() {
     
     while(1) {
         int map_select = 0;
-        menu_loop(&map_select);
+        menu_loop(&map_select, textbuffer);
 
         game_loop(maps[map_select], display);
     }
