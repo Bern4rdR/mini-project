@@ -159,7 +159,9 @@ void main() {
         user_isr(&walking, &playerDirection);
 
         if (getbtns() & 0x2) {
-            movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
+            //movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
+            playerPosX += 1;
+            playerPosY += 1;
         }
         render_display(display);
     }
