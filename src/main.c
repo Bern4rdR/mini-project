@@ -88,7 +88,7 @@ void main() {
     display_update(textbuffer);
 
     while (1) {
-        // if button 1 is pressed - start game
+        // if button 4 is pressed - start game
         if (getbtns() & 0x4) {
             display_string(textbuffer, 1, "BTN4 pressed");
             display_update(textbuffer);
@@ -126,8 +126,22 @@ void main() {
     float playerDirection = 0;
     int walking = 0;
 
+    float pot_value = readADC() / 1023;
+    
+    while (1) {
+        // potentiometer test:
+        display_string(textbuffer, 0, "Potentiometer");
+        display_update(textbuffer);
 
-    // need to check if the potentiometer is turning
+        float new_pot_value = readADC() / 1023;
+        if (new_pot_value != pot_value) {
+            display_string(textbuffer, 1, "rotated");
+            display_update(textbuffer);
+        }
+    }
+    
+
+    
 
     // // game loop
     // while (1) {
