@@ -160,7 +160,7 @@ void main() {
 
         user_isr(&walking, &playerDirection);
 
-        if (walking) {
+        if (getbnts() & 0x4) {
             movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
         }
         render_display(display);
