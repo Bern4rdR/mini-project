@@ -32,7 +32,7 @@ void user_isr(int* walking, float* playerDirection) {
     }
 
     // convert to a float between 0 and 1
-    float potentiometerFloat = (float)readADC() / 1023;
+    float potentiometerFloat = (1023 - (float)readADC()) / 1023;
     // convert to a float between 0 and 2pi
     //*playerDirection = potentiometerFloat * 2 * PI;
 
