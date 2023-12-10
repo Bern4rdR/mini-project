@@ -5,6 +5,7 @@
 uint8_t spi_send_recv(uint8_t data);
 void display_image(int x, unsigned int* data);
 void display_update(char textbuffer[4][16]);
+void render_display(char display[4][128]);
 void display_init(void);
 void clear_display(char textbuffer[4][16]);
 void erase_display();

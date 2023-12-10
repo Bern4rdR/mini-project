@@ -33,30 +33,19 @@ void user_isr(int* walking, float* playerDirection) {
     *playerDirection = potentiometerFloat * 2 * PI;
 }
 
-void initADC() {
-    /* PORTB.2 is analog pin with potentiometer*/
-	AD1PCFG = ~(1 << 2);
-	TRISBSET = (1 << 2);
-	/* Use pin 2 for positive */
-	AD1CHS = (0x2 << 16);
-	
-	/* Data format in uint32, 0 - 1024
-	Manual sampling, auto conversion when sampling is done
-	FORM = 0x4; SSRC = 0x7; CLRASAM = 0x0; ASAM = 0x0; */
-	AD1CON1 = (0x4 << 8) | (0x7 << 5);
-	
-	AD1CON2 = 0x0;
-	AD1CON3 |= (0x1 << 15);
-	
-	/* Set up output pins */
-	ODCE = 0x0;
-	TRISECLR = 0xFF;
-	
-	/* Turn on ADC */
-	AD1CON1 |= (0x1 << 15);    
-}
+// void set_interrupts(void) {
+//     // enable interrupts globally
+//     asm volatile("ei");
+// }
 
-// void initTimer() {
+// void open_ports(void) {
+//     // set PORTD as input
+//     TRISDSET = 0x7F0;
+//     // set PORTE as output
+//     TRISECLR = 0xFF;
+// }
+
+// void initTimer(void) {
 //     // initialize timer 1
 //     T1CON = 0x70; // set prescaler to 256
 //     PR1 = 3125; // set period to 0.1 seconds
@@ -82,7 +71,31 @@ void initADC() {
 // }
 
 
-int readADC() {
+
+void initADC() {
+    /* PORTB.2 is analog pin with potentiometer*/
+	AD1PCFG = ~(1 << 2);
+	TRISBSET = (1 << 2);
+	/* Use pin 2 for positive */
+	AD1CHS = (0x2 << 16);
+	
+	/* Data format in uint32, 0 - 1024
+	Manual sampling, auto conversion when sampling is done
+	FORM = 0x4; SSRC = 0x7; CLRASAM = 0x0; ASAM = 0x0; */
+	AD1CON1 = (0x4 << 8) | (0x7 << 5);
+	
+	AD1CON2 = 0x0;
+	AD1CON3 |= (0x1 << 15);
+	
+	/* Set up output pins */
+	ODCE = 0x0;
+	TRISECLR = 0xFF;
+	
+	/* Turn on ADC */
+	AD1CON1 |= (0x1 << 15);    
+}
+
+int readADC(void) {
     /* Start sampling, wait until conversion is done */
     AD1CON1 |= (0x1 << 1);
     while(!(AD1CON1 & (0x1 << 1)));
