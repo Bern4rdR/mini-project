@@ -87,24 +87,28 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
         display_string(textbuffer, 1, "BTN4 to start");
 
         if(getsw() & SW4) {
-            display_string(textbuffer, 2, " Map 1");
-            display_string(textbuffer, 3, "[Map 2]");
-            *map_select = 1;
-        }
-        else {
             display_string(textbuffer, 2, "[Map 1]");
             display_string(textbuffer, 3, " Map 2");
             *map_select = 0;
         }
+        else {
+            display_string(textbuffer, 2, " Map 1");
+            display_string(textbuffer, 3, "[Map 2]");
+            *map_select = 1;
+        }
 
         display_update(textbuffer);
+        quicksleep(100000);
         
-        // if button 4 is pressed - start game
-        if (getbtns() & 0x4) {
+        if (getbtns() & BTN4) {
+            clear_display(textbuffer);
+            display_string(textbuffer, 1, "Starting game...");
+            display_string(textbuffer, 2, "BTN2 to exit");
             // keep for actual game
             quicksleep(500000);
             clear_display(textbuffer);
             display_update(textbuffer);
+            // start game
             return;
         }
     }
@@ -132,8 +136,8 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
 
         render_display(display);
 
-        // exit if button 2 is pressed
-        if (getbtns() & 0x1) {
+        if (getbtns() & BTN2) {
+            // exit to main menu
             return;
         }
     
