@@ -122,7 +122,7 @@ void main() {
         1, 1, 1, 1, 1, 1, 1, 1
     };
     
-    int playerPosX = 32, playerPosY = 32;
+    int playerPosX = 48, playerPosY = 32;
     float playerDirection = 0;
     int walking = 0;
 
