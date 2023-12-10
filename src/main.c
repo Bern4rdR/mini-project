@@ -75,11 +75,11 @@ void init() {
 
 void menu_loop(int* map_select, char textbuffer[4][16]) {
     // MENU 
-    display_string(textbuffer, 0, "Maze Runner");
+    display_string(textbuffer, 1, "Maze Runner");
 
     display_update(textbuffer);
 
-    quicksleep(500000);
+    quicksleep(5000000);
 
     // menu loop
     while (1) {
@@ -87,14 +87,14 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
         display_string(textbuffer, 1, "BTN4 to start");
 
         if(getsw() & SW4) {
-            display_string(textbuffer, 2, "[Map 1]");
-            display_string(textbuffer, 1, " Map 2");
-            *map_select = 0;
+            display_string(textbuffer, 2, " Map 1");
+            display_string(textbuffer, 3, "[Map 2]");
+            *map_select = 1;
         }
         else {
-            display_string(textbuffer, 2, " Map 1");
-            display_string(textbuffer, 1, "[Map 2]");
-            *map_select = 1;
+            display_string(textbuffer, 2, "[Map 1]");
+            display_string(textbuffer, 3, " Map 2");
+            *map_select = 0;
         }
 
         display_update(textbuffer);
