@@ -74,11 +74,11 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
     rayDirection = range_reduce(rayDirection);
 
     // Cast rays
-    for (r = 0; r < DISPLAY_WIDTH; r++) {
+    for (r = (DISPLAY_WIDTH - 1); r >= 0; r++) {
         // Check horizontal lines
         dof = 0;
         float disH=1000000, hx=*playerPosX, hy=*playerPosY;
-        float aTan = 1/tan(rayDirection);
+        float aTan = -1/tan(rayDirection);
         if (rayDirection > PI) {
             rayY = (((int)*playerPosY >> 3) << 3) - 0.0001;
             rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
@@ -117,7 +117,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         // Check vertical lines
         dof = 0;
         float disV=1000000, vx=*playerPosX, vy=*playerPosY;
-        float nTan = tan(rayDirection);
+        float nTan = -tan(rayDirection);
         if (rayDirection > P2 && rayDirection < P3) {
             rayX = (((int)*playerPosX >> 3) << 3) - 0.0001;
             rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
