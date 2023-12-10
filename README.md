@@ -48,7 +48,9 @@ make install
 - BTN3: go forwards.
 - BTN4: go left.
 
-- ALTERNATIVE: BTN4: go forwards. 
+ALTERNATIVE:
+
+- BTN4: go forwards.
 
 - Potentiometer: rotate to rotate player FOV in inputed rotational direction.
 

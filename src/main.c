@@ -112,12 +112,12 @@ void main() {
     }
     
     int mapping[64] = {
-        1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, // 0-8, 8-16, 16-24, 24-32, 32-40, 40-48, 48-56, 56-64
         1, 0, 1, 0, 0, 0, 0, 1,
         1, 0, 1, 0, 1, 1, 0, 1,
         1, 0, 1, 1, 1, 1, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 0, 0, 0, 1, 0, 1,
+        1, 0, 0, 0, 0, 1, 1, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
         1, 1, 1, 1, 1, 1, 1, 1
     };
@@ -128,31 +128,32 @@ void main() {
 
     float pot_value = readADC() / 1023;
     
-    while (1) {
-        // potentiometer test:
-        display_string(textbuffer, 0, "Potentiometer");
-        display_update(textbuffer);
 
-        float new_pot_value = readADC() / 1023;
-        if (new_pot_value != pot_value) {
-            display_string(textbuffer, 1, "rotated");
-            display_update(textbuffer);
-        }
-    }
+    // while (1) {
+    //     // potentiometer test:
+    //     display_string(textbuffer, 0, "Potentiometer");
+    //     display_update(textbuffer);
+
+    //     float new_pot_value = readADC() / 1023;
+    //     if (new_pot_value != pot_value) {
+    //         display_string(textbuffer, 1, "rotated");
+    //         display_update(textbuffer);
+    //     }
+    // }
     
 
     
 
     // // game loop
-    // while (1) {
-    //     castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display)
+    while (1) {
+        castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
-    //     user_isr(&walking, &playerDirection);
+        user_isr(&walking, &playerDirection);
 
-    //     if (walking) {
-    //         movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
-    //     }
-    //     render_display(display);
-    //     quicksleep(100000);
-    // }
+        if (walking) {
+            movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
+        }
+        render_display(display);
+        quicksleep(100000);
+    }
 }

@@ -32,6 +32,7 @@ void user_isr(int* walking, float* playerDirection) {
     // convert to a float between 0 and 2pi
     *playerDirection = potentiometerFloat * 2 * PI;
 }
+
 void initADC() {
     /* PORTB.2 is analog pin with potentiometer*/
 	AD1PCFG = ~(1 << 2);
