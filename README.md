@@ -23,7 +23,7 @@ The potientiometer can be used to rotate the players field of view, i.e what the
 ## Installation
 
 1. Clone this repository.
-2. Open an terminal with the path for the cloned repository.
+2. Open a terminal with the path for the cloned repository.
 3. Enter to the mcb32 terminal
 
 ```bash
@@ -34,6 +34,8 @@ The potientiometer can be used to rotate the players field of view, i.e what the
 
 ```bash
 make
+```
+```bash
 make install
 ```
 
@@ -59,3 +61,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - Inspiration for this project came from the game Wolfenstein 3D
+- Some of the functions used to interact with the ChipKIT were taken from the labs in the course IS1500 HT23
+  - they were written by Axel Isaksson, F Lundevall and Ture Teknolog
