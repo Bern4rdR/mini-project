@@ -115,6 +115,7 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
     float playerDirection = PI/2;
     int walking = 0;
     int mapSize = 8;
+    int goalX = 45, goalY = 45;
 
     float pot_value = readADC() / 1023;
     
@@ -130,12 +131,15 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
         }
 
         render_display(display);
-    }
 
-    // exit if button 1 is pressed
-    if (getbtns() & 0x1) {
-        return;
-    }
+        // exit if button 2 is pressed
+        if (getbtns() & 0x1) {
+            return;
+        }
+    
+        
+
+    }    
 }
 
 void main() {

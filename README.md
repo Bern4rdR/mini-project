@@ -56,10 +56,10 @@ This is a school project which means no contributions are allowed.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Inspiration for this project came from the game Wolfenstein 3D
-- Some of the functions used to interact with the ChipKIT were taken from the labs in the course IS1500 HT23
-  - they were written by Axel Isaksson, F Lundevall and Ture Teknolog
+- Inspiration for this project came from the game Wolfenstein 3D.
+- Some of the functions used to interact with the ChipKIT were taken from the [KTH course IS1200 GitHub repository](https://github.com/capitanu/IS1200) and the [labs](https://canvas.kth.se/courses/41500/pages/labs) in the course IS1500 HT23.
+  - They were written by Axel Isaksson, F Lundevall and Ture Teknolog.
