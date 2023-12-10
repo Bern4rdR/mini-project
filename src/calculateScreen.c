@@ -36,8 +36,8 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance) {
     }
 
     // calculate the height of the line
-    // map distance (can be 0-48) to 0-1 with inverse exponential function
-    float height = 1 - exp(-distance/100);
+    // map distance (can be 0-128) to 1-0 with inverse exponential function
+    float height = 1 - distance/128;
     // map height to 0-30
     height = (int)(height * 30);
 
@@ -83,13 +83,13 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         float aTan = -1/tan(rayDirection);
         if (rayDirection > PI) {
             rayY = (((int)*playerPosY >> 6) << 6) - 0.0001;
-            rayX = (*playerPosY - rayY) * aTan + *playerPosX;
+            rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
             yo = -64;
             xo = -yo * aTan;
         }
         if (rayDirection < PI) {
             rayY = (((int)*playerPosY >> 6) << 6) + 64;
-            rayX = (*playerPosY - rayY) * aTan + *playerPosX;
+            rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
             yo = 64;
             xo = -yo * aTan;
         }
@@ -103,11 +103,11 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         while(dof < 8) {
             mx = (int)(rayX) >> 6;
             my = (int)(rayY) >> 6;
-            mp = my * mapSize + mx;
+            mp = (my * mapSize) + mx;
             if (mp > 0 && mp < mapSize * mapSize && map[mp] != 0) {
                 // hit wall
                 // Calculate distance to wall
-                disH = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
+                disH = sqrt(pow((rayX - *playerPosX), 2) + pow((rayY - *playerPosY), 2));
                 dof = 8;
             } else {
                 // next line
@@ -123,13 +123,13 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         float nTan = -tan(rayDirection);
         if (rayDirection > P2 && rayDirection < P3) {
             rayX = (((int)*playerPosX >> 6) << 6) - 0.0001;
-            rayY = (*playerPosX - rayX) * nTan + *playerPosY;
+            rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
             xo = -64;
             yo = -xo * nTan;
         }
         if (rayDirection < P2 || rayDirection > P3) {
             rayX = (((int)*playerPosX >> 6) << 6) + 64;
-            rayY = (*playerPosX - rayX) * nTan + *playerPosY;
+            rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
             xo = 64;
             yo = -xo * nTan;
         }
@@ -142,11 +142,11 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         while (dof < 8) {
             mx = (int)(rayX) >> 6;
             my = (int)(rayY) >> 6;
-            mp = my * mapSize + mx;
+            mp = (my * mapSize) + mx;
             if (mp > 0 && mp < mapSize * mapSize && map[mp] != 0) {
                 // hit wall
                 // Calculate distance to wall
-                disV = sqrt((rayX - *playerPosX) * (rayX - *playerPosX) + (rayY - *playerPosY) * (rayY - *playerPosY));
+                disV = sqrt(pow((rayX - *playerPosX), 2) + pow((rayY - *playerPosY), 2));
                 dof = 8;
             } else {
                 // next line
@@ -186,7 +186,7 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
     float moveY = sin(*playerDirection) + 0.5;
 
     // check for collisions
-    if (map[(int)(*playerPosY + moveY) * mapSize + (int)(*playerPosX + moveX)] == 0) {
+    if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
         *playerPosX += moveX;
         *playerPosY += moveY;
     }
