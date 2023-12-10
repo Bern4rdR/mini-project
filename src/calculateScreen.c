@@ -16,8 +16,6 @@
 #define DR 0.01745329251
 
 
-#include <stdio.h>
-//#include <string.h>
 #include "screen.h"
 #include "math.h"
 
@@ -36,26 +34,24 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
     }
 
     // calculate the height of the line
-    // map distance (can be 0-128) to 1-0
     float height = 1 - distance/32;
     if (height < 0) {
         height = 0;
     }
-    // map height to 0-30
     height = (int)(height * 30);
 
     int dither = 1/opacity;
+    int offset = (int)(distance * 10) % dither;
 
     int top = (DISPLAY_HEIGHT - height)/2;
     int bot = (DISPLAY_HEIGHT + height)/2;
 
     // writes from the top to the bottom
     for (i = top; i < bot; i++) {
-        if (i % dither == 0) {
+        if ((i + offset) % dither == 0) {
             // calculate the index of the character in the display
-            // (4 characters per line, 128 lines)
-            // get the chunk index and bit index of that column
             int char_index = i / BYTE_SIZE;
+            // get the chunk index and bit index of that column
             int bit_index  = i % BYTE_SIZE;
 
             // set the bit
@@ -64,27 +60,20 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
     }
 }
 
-/* Raytrace the walls based on the player position and orientation
+/* Raycast to find the walls based on the player position and orientation
  * @param playerDirection: pointer to the player's direction
  * @param playerPosX:      pointer to the player's x position
  * @param playerPosY:      pointer to the player's y position
- * @param map:             pointer to the map
+ * @param map:             the map
  * @param mapSize:         size of the map
  */
 void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize, char display[4][DISPLAY_WIDTH]) {
-    // Cast a ray from the player position to the edge of the screen
-    // Calculate the distance to the wall
-    // Calculate the opacity of the wall
-    // Draw the wall
     int r, mx, my, mp, dof;
     float rayX, rayY, rayDirection, xo, yo, disT;
     rayDirection = *playerDirection - DR * DISPLAY_WIDTH/2;
-    if (rayDirection < 0) {
-        rayDirection += 2*PI;
-    }
-    if (rayDirection > 2*PI) {
-        rayDirection -= 2*PI;
-    }
+    rayDirection = range_reduce(rayDirection);
+
+    // Cast rays
     for (r = 0; r < DISPLAY_WIDTH; r++) {
         // Check horizontal lines
         dof = 0;
@@ -108,13 +97,12 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             dof = 8;
         }
 
-        // currently stuck in infinite loop, need to fix
         while(dof < 8) {
             mx = (int)(rayX) >> 3;
             my = (int)(rayY) >> 3;
             mp = (my * mapSize) + mx;
+            // hit wall
             if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
-                // hit wall
                 // Calculate distance to wall
                 disH = sqrt(pow((rayX - *playerPosX), 2) + pow((rayY - *playerPosY), 2));
                 dof = 8;
@@ -152,8 +140,8 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             mx = (int)(rayX) >> 3;
             my = (int)(rayY) >> 3;
             mp = (my * mapSize) + mx;
+            // hit wall
             if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
-                // hit wall
                 // Calculate distance to wall
                 disV = sqrt(pow((rayX - *playerPosX), 2) + pow((rayY - *playerPosY), 2));
                 dof = 8;
@@ -170,25 +158,16 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         if(disV < disH) {rayX=vx; rayY=vy; disT=disV; opacity = 0.5;}//side=0;}
         if(disH < disV) {rayX=hx; rayY=hy; disT=disH;}//side=1;}
 
-        float ca = *playerDirection - rayDirection;
-        if (ca < 0) {
-            ca += 2*PI;
-        }
-        if (ca > 2*PI) {
-            ca -= 2*PI;
-        }
-        //disT = disT * cos(ca); // fix fishbowl effect
+        // correct for fisheye effect
+        // float ca = *playerDirection - rayDirection;
+        // ca = range_reduce(ca);
+        // disT = disT * cos(ca);
         // Draw one line of the wall
         drawLine(display, r, disT, opacity);
 
 
         rayDirection += DR;
-        if (rayDirection < 0) {
-            rayDirection += 2*PI;
-        }
-        if (rayDirection > 2*PI) {
-            rayDirection -= 2*PI;
-        }
+        rayDirection = range_reduce(rayDirection);
     }
 }
 
@@ -196,7 +175,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
  * @param playerDirection: pointer to the player's direction
  * @param playerPosX:      pointer to the player's x position
  * @param playerPosY:      pointer to the player's y position
- * @param map:             pointer to the map
+ * @param map:             the map
  * @param mapSize:         size of the map
  */
 void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize) {
@@ -210,37 +189,3 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
         *playerPosY += moveY;
     }
 }
-
-
-// used to test the code, final version will be in main.c
-// int main() {
-//     char display[4][DISPLAY_WIDTH];
-//     memset(display, 0, sizeof(display));
-//     int map[] = {
-//         1, 1, 1, 1, 1, 1, 1, 1,
-//         1, 0, 1, 0, 0, 0, 0, 1,
-//         1, 0, 1, 0, 1, 0, 0, 1,
-//         1, 0, 1, 1, 1, 0, 0, 1,
-//         1, 0, 0, 0, 0, 0, 0, 1,
-//         1, 0, 0, 0, 0, 1, 0, 1,
-//         1, 0, 0, 0, 0, 0, 0, 1,
-//         1, 1, 1, 1, 1, 1, 1, 1
-//     };
-//     int playerPosX = 54, playerPosY = 54;
-//     float playerDirection = 0;
-
-//     // Test:  distance can't be more than DISPLAY_HEIGHT
-//     // In the future, display will be a 2D array and only one column will be passed through
-//     castRay(&playerDirection, &playerPosX, &playerPosY, map, 8, display);
-
-//     // print the display
-//     // 4 characters per line, 128 lines
-//     for (int i = 0; i < DISPLAY_HEIGHT; i++) {
-//         for (int j = 0; j < 4; j++) {
-//             printf("%c", display[j][i]);
-//         }
-//         printf("\n");
-//     }
-
-//     return 0;
-// }

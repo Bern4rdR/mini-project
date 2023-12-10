@@ -45,7 +45,6 @@ void user_isr(int* walking, float* playerDirection) {
 
     // reset timer
     TMR1 = 0;
-
 }
 
 void set_interrupts(void) {
@@ -108,4 +107,9 @@ int readADC(void) {
 int getbtns(void) {
     // returns the value of the buttons
     return (PORTD >> 5) & 0x7;
+}
+
+int getsw(void) {
+    // returns the value of the switches
+    return (PORTD >> 8) & 0xF;
 }

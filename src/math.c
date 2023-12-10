@@ -1,10 +1,24 @@
 #include "math.h"
 
-/* Returns an approximation of the sine of the argument.
+
+/* Return the angle in the range 0-2PI
+ * @param rad: the angle in radians
+ */
+float range_reduce(float rad) {
+    while (rad < 0) {
+        rad += 2 * PI;
+    }
+    while (rad > 2 * PI) {
+        rad -= 2 * PI;
+    }
+    return rad;
+}
+
+/* Taylor approximation of the sine of the argument.
  * @param deg: the angle in degrees
 */
 float sin(float rad){
-
+    rad = range_reduce(rad);
     // Taylor series approximation
     float sin = rad;
     float term = rad;
@@ -16,11 +30,11 @@ float sin(float rad){
     return sin;
 }
 
-/* Returns an approximation of the sine of the argument.
+/* Taylor approximation of the sine of the argument.
  * @param deg: the angle in degrees
 */
 float cos(float rad){
-
+    rad = range_reduce(rad);
     // Taylor series approximation
     float cos = 1;
     float term = 1;
@@ -33,19 +47,14 @@ float cos(float rad){
     return cos;
 }
 
+/* Taylor approximation of the tangent of the argument.
+ * @param deg: the angle in degrees
+*/
 float tan(float rad){
     return sin(rad)/cos(rad);   
 }
 
-float deg_to_rad(float deg){
-    return deg * DR;
-}
-
-float rad_to_deg(float rad){
-    return rad / DR;
-}
-
-/* Returns the square root of the argument.
+/* Square root of the argument.
  * @param n: the number to take the square root of
 */
 float sqrt(float n) {
@@ -62,7 +71,10 @@ float sqrt(float n) {
     return x;
 }
 
-
+/* Power of the base to the exponent.
+ * @param base: the base
+ * @param exponent: the exponent
+ */
 float pow(float base, float exponent){
     float result = 1;
     int i;
@@ -72,10 +84,16 @@ float pow(float base, float exponent){
     return result;
 }
 
+/* Return the floor of the argument.
+ * @param n: the number to floor
+ */
 float floor(float x){
     return (int) x;
 }
 
+/* Return the ceiling of the argument.
+ * @param n: the number to ceil
+ */
 float ceil(float x){
     return (int) x + 1;
 }
