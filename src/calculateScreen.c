@@ -37,7 +37,7 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
 
     // calculate the height of the line
     // map distance (can be 0-48) to 0-1
-    float height = (DISPLAY_HEIGHT * 0.5) / distance;
+    float height = distance / 48;
     // map height to 0-30
     height *= 30;
     height = (int)height;
