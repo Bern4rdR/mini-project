@@ -45,30 +45,29 @@ void open_ports(void) {
     TRISECLR = 0xFF;
 }
 
-// void initTimer(void) {
-//     // initialize timer 1
-//     T1CON = 0x70; // set prescaler to 256
-//     PR1 = 3125; // set period to 0.1 seconds
-//     TMR1 = 0; // reset timer
-//     T1CONSET = 0x8000; // start timer
+void initTimer(void) {
+    // initialize timer 1
+    T1CON = 0x70; // set prescaler to 256
+    PR1 = 3125; // set period to 0.1 seconds
+    TMR1 = 0; // reset timer
+    T1CONSET = 0x8000; // start timer
 
-//     // set timer interrupt
-//     IPCSET(2) = 0x1C; // set priority to 7
-//     IFSCLR(0) = 0x100; // clear interrupt flag
-//     IECSET(0) = 0x100; // enable interrupt
+    // set timer interrupt
+    IPCSET(2) = 0x1C; // set priority to 7
+    IFSCLR(0) = 0x100; // clear interrupt flag
+    IECSET(0) = 0x100; // enable interrupt
+}
 
+// timer interrupt handler, ticks every 0.1 seconds
+void tick(void) {
+    // wait for timer interrupt
+    while (!(IFS(0) & 0x100));
+    // reset interrupt flag
+    IFSCLR(0) = 0x100;
 
-//     // the timer ticks every 0.1 seconds
-
-//     // wait until timer interrupt flag is set
-//     while (!(IFS(0) & 0x100));
-//     // reset timer interrupt flag
-//     IFSCLR(0) = 0x100;
-
-//     // reset timer
-//     TMR1 = 0;
-
-// }
+    // reset timer
+    TMR1 = 0;
+}
 
 
 

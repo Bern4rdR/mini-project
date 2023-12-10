@@ -1,13 +1,20 @@
 #include <pic32mx.h>
 
 
+// Initialize the Interrupt Service Routine (ISR)
 void user_isr(int* walking, float* playerDirection);
-// havent used
-// void set_interrupts(void);
-// void open_ports(void);
 
-// fucks up screen
-// void initTimer(void);
+// Interrupts
+void set_interrupts(void);
+void open_ports(void);
+
+// Timer
+void initTimer(void);
+void tick(void);
+
+// Analog-to-digital converter (ADC), for potentiometer
 void initADC(void);
 int readADC(void);
+
+// Buttons
 int getbtns(void);
