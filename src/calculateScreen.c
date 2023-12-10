@@ -165,8 +165,8 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             }
         }
 
-        if(disV < disH) {rayX=vx; rayY=vy; disT=disV; drawLine(display, r, disT, 1)}//side=0;}
-        if(disH < disV) {rayX=hx; rayY=hy; disT=disH; drawLine(display, r, disT, 0.5)}//side=1;}
+        if(disV < disH) {rayX=vx; rayY=vy; disT=disV; drawLine(display, r, disT, 1);}//side=0;}
+        if(disH < disV) {rayX=hx; rayY=hy; disT=disH; drawLine(display, r, disT, 0.5);}//side=1;}
 
         // Draw one line of the wall
         //drawLine(display, r, disT);
