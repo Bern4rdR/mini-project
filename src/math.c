@@ -4,35 +4,33 @@
  * @param deg: the angle in degrees
 */
 float sin(float rad){
-    float deg = rad_to_deg(rad);
 
     // Taylor series approximation
-    float sin = deg;
-    float term = deg;
+    float sin = rad;
+    float term = rad;
     int i;
     for(i = 1; i < 10; i++) {
-        term *= -1 * deg * deg / ((2 * i + 1) * (2 * i));
+        term *= -1 * rad * rad / ((2 * i + 1) * (2 * i));
         sin += term;
     }
-    return deg_to_rad(sin);
+    return sin;
 }
 
 /* Returns an approximation of the sine of the argument.
  * @param deg: the angle in degrees
 */
 float cos(float rad){
-    float deg = rad_to_deg(rad);
 
     // Taylor series approximation
     float cos = 1;
     float term = 1;
     int i;
-    for(i = 1; i < 10; i++) {
-        term *= -1 * deg * deg / ((2 * i) * (2 * i - 1));
+    for(i = 1; i < 50; i++) {
+        term *= -1 * rad * rad / ((2 * i) * (2 * i - 1));
         cos += term;
     }
 
-    return deg_to_rad(cos);
+    return cos;
 }
 
 float tan(float rad){
