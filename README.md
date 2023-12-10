@@ -16,7 +16,9 @@ This is a simple maze runner game using ray tracing to display from 2D to 3D and
 
 ## Tutorial
 
-There are four buttons on the ChipKIT. However this project only uses/needs one button, button 4 (BTN4). BTN4 is responsible for moving forward in the players direction.
+There are four buttons on the ChipKIT. However this project only uses/needs two buttons, button 4 (BTN4) and button 2. BTN4 is responsible for moving forward in the players direction. BTN2 is the exit button while in a game, in case you get lost and want to try again.
+
+It also utilizes one of the ChipKIT switches, more specifically switch four (SW4). SW4 is used to indicate which of the two maps to choice.
 
 The potientiometer can be used to rotate the players field of view, i.e what the player can see which is also what is displayed on the screen. The potientiometer uses the relative rotation since it can only rotate about 270 degress (3/2 PI radians) while the player is supposed to be able to rotate 360 degress (2 PI). So if it rotates a third of its rotation to the left then the players field of view will also be rotated a third of its rotation to the left.
 
@@ -47,6 +49,8 @@ For further installation instructions regarding the mcb32 toolchain, we recommen
 
 ## Usage
 
+- SW4: map selctor indicator.
+- BTN2: exit game to main menu.
 - BTN4: go forwards.
 - Potentiometer: rotate to rotate player FOV in inputed rotational direction.
 
