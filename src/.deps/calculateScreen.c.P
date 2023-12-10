@@ -1,14 +1,4 @@
-calculateScreen.c.o: calculateScreen.c /opt/mcb32tools/include/stdio.h \
- /opt/mcb32tools/include/klibc/extern.h \
- /opt/mcb32tools/include/klibc/inline.h \
- /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdarg.h \
- /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h \
- /opt/mcb32tools/include/string.h screen.h \
+calculateScreen.c.o: calculateScreen.c screen.h \
  /opt/mcb32tools/include/pic32mx.h math.h
-calculateScreen.c /opt/mcb32tools/include/stdio.h :
- /opt/mcb32tools/include/klibc/extern.h :
- /opt/mcb32tools/include/klibc/inline.h :
- /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdarg.h :
- /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h :
- /opt/mcb32tools/include/string.h screen.h :
+calculateScreen.c screen.h :
  /opt/mcb32tools/include/pic32mx.h math.h :

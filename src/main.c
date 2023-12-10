@@ -136,19 +136,19 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
             if (moveX > 0 && moveY > 0) {
                 // player is moving up and right
                 playerPosX += 1;
-                playerPosY -= 1;
+                playerPosY += 1;
             } else if (moveX > 0 && moveY < 0) {
                 // player is moving down and right
                 playerPosX += 1;
-                playerPosY += 1;
+                playerPosY -= 1;
             } else if (moveX < 0 && moveY > 0) {
                 // player is moving up and left
                 playerPosX -= 1;
-                playerPosY -= 1;
+                playerPosY += 1;
             } else if (moveX < 0 && moveY < 0) {
                 // player is moving down and left
                 playerPosX -= 1;
-                playerPosY += 1;
+                playerPosY -= 1;
             } else if (moveX > 0 && moveY == 0) {
                 // player is moving right
                 playerPosX += 1;
@@ -157,10 +157,10 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
                 playerPosX -= 1;
             } else if (moveX == 0 && moveY > 0) {
                 // player is moving up
-                playerPosY -= 1;
+                playerPosY += 1;
             } else if (moveX == 0 && moveY < 0) {
                 // player is moving down
-                playerPosY += 1;
+                playerPosY -= 1;
             }
         }
 
