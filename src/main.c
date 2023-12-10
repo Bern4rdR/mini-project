@@ -83,17 +83,17 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
 
     // menu loop
     while (1) {
-        display_string(textbuffer, 1, "Select map SW4");
-        display_string(textbuffer, 2, "BTN4 to start");
+        display_string(textbuffer, 0, "Select map SW4");
+        display_string(textbuffer, 1, "BTN4 to start");
 
         if(getsw() & SW4) {
-            display_string(textbuffer, 3, "[Map 1]");
-            display_string(textbuffer, 4, " Map 2");
+            display_string(textbuffer, 2, "[Map 1]");
+            display_string(textbuffer, 1, " Map 2");
             *map_select = 0;
         }
         else {
-            display_string(textbuffer, 3, " Map 1");
-            display_string(textbuffer, 4, "[Map 2]");
+            display_string(textbuffer, 2, " Map 1");
+            display_string(textbuffer, 1, "[Map 2]");
             *map_select = 1;
         }
 
