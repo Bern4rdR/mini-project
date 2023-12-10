@@ -171,6 +171,10 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
     }
 }
 
+int within_margin(float value, float target, float margin) {
+    return value > target - margin && value < target + margin;
+}
+
 /* Move the player in the directino they are facing
  * @param playerDirection: pointer to the player's direction
  * @param playerPosX:      pointer to the player's x position
