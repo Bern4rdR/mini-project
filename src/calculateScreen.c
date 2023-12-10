@@ -181,8 +181,8 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
  */
 void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize) {
     // determine the player movement based on the direction
-    float moveX = cos(*playerDirection) * 0.1;
-    float moveY = sin(*playerDirection) * 0.1;
+    float moveX = cos(*playerDirection) + 0.5; // roundabout way of rounding to the nearest integer
+    float moveY = sin(*playerDirection) + 0.5;
 
     // check for collisions
     if (map[(int)(*playerPosY + moveY) * mapSize + (int)(*playerPosX + moveX)] == 0) {
