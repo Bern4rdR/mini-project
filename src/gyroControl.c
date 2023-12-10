@@ -23,54 +23,51 @@
  * @param playerDirection: pointer to a float that indicates the direction the player is facing
  */
 void user_isr(int* walking, float* playerDirection) {
-    if (getbtns() & BTN4) {
-        *walking = *walking ? 0 : 1;
+    // wait for timer interrupt - aka ticks every 0.1 seconds
+    if (!(IFS(0) & 0x100)) {
+            
+        if (getbtns() & BTN4) {
+            *walking = *walking ? 0 : 1;
+        }
+
+        // convert to a float between 0 and 1
+        float potentiometerFloat = (float)readADC() / 1023;
+        // convert to a float between 0 and 2pi
+        *playerDirection = potentiometerFloat * 2 * PI;        
     }
 
-    // convert to a float between 0 and 1
-    float potentiometerFloat = (float)readADC() / 1023;
-    // convert to a float between 0 and 2pi
-    *playerDirection = potentiometerFloat * 2 * PI;
+    // reset interrupt flag
+    IFSCLR(0) = 0x100;
+
+    // reset timer
+    TMR1 = 0;
+
 }
 
-// void set_interrupts(void) {
-//     // enable interrupts globally
-//     asm volatile("ei");
-// }
+void set_interrupts(void) {
+    // enable interrupts globally
+    asm volatile("ei");
+}
 
-// void open_ports(void) {
-//     // set PORTD as input
-//     TRISDSET = 0x7F0;
-//     // set PORTE as output
-//     TRISECLR = 0xFF;
-// }
+void open_ports(void) {
+    // set PORTD as input
+    TRISDSET = 0x7F0;
+    // set PORTE as output
+    TRISECLR = 0xFF;
+}
 
-// void initTimer(void) {
-//     // initialize timer 1
-//     T1CON = 0x70; // set prescaler to 256
-//     PR1 = 3125; // set period to 0.1 seconds
-//     TMR1 = 0; // reset timer
-//     T1CONSET = 0x8000; // start timer
+void initTimer(void) {
+    // initialize timer 1
+    T1CON = 0x70; // set prescaler to 256
+    PR1 = 3125; // set period to 0.1 seconds
+    TMR1 = 0; // reset timer
+    T1CONSET = 0x8000; // start timer
 
-//     // set timer interrupt
-//     IPCSET(2) = 0x1C; // set priority to 7
-//     IFSCLR(0) = 0x100; // clear interrupt flag
-//     IECSET(0) = 0x100; // enable interrupt
-
-
-//     // the timer ticks every 0.1 seconds
-
-//     // wait until timer interrupt flag is set
-//     while (!(IFS(0) & 0x100));
-//     // reset timer interrupt flag
-//     IFSCLR(0) = 0x100;
-
-//     // reset timer
-//     TMR1 = 0;
-
-// }
-
-
+    // set timer interrupt
+    IPCSET(2) = 0x1C; // set priority to 7
+    IFSCLR(0) = 0x100; // clear interrupt flag
+    IECSET(0) = 0x100; // enable interrupt
+}
 
 void initADC() {
     /* PORTB.2 is analog pin with potentiometer*/

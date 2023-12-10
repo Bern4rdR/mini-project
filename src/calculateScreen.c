@@ -165,9 +165,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             }
         }
 
-        float opacity = 1;
-
-        if(disV < disH) {rayX=vx; rayY=vy; disT=disV; opacity = 0.5;}//side=0;}
+        if(disV < disH) {rayX=vx; rayY=vy; disT=disV;}//side=0;}
         if(disH < disV) {rayX=hx; rayY=hy; disT=disH;}//side=1;}
 
         float ca = *playerDirection - rayDirection;
@@ -179,7 +177,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         }
         //disT = disT * cos(ca); // fix fishbowl effect
         // Draw one line of the wall
-        drawLine(display, r, disT, opacity);
+        drawLine(display, r, disT, 1);
 
 
         rayDirection += DR;

@@ -64,13 +64,6 @@ float sqrt(float n) {
     return x;
 }
 
-float floor(float x){
-    return (int) x;
-}
-
-float ceil(float x){
-    return (int) x + 1;
-}
 
 float pow(float base, float exponent){
     float result = 1;
@@ -79,4 +72,12 @@ float pow(float base, float exponent){
         result *= base;
     }
     return result;
+}
+
+float floor(float x){
+    return (int) x;
+}
+
+float ceil(float x){
+    return (int) x + 1;
 }
