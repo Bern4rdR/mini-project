@@ -103,7 +103,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         }
 
         // currently stuck in infinite loop, need to fix
-        while(dof >= 8) {
+        while(dof < 8) {
             mx = (int)(rayX) >> 6;
             my = (int)(rayY) >> 6;
             mp = my * mapSize + mx;
