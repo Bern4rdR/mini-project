@@ -37,9 +37,11 @@ make
 make install
 ```
 
-5. Follow the instructions on the screen and enjoy. 
+5. Follow the instructions on the screen and enjoy.
 
-For further installation instructions 
+For more detailed installations instructions regarding cloning of the repository, we recommend [Github Docs](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+
+For further installation instructions regarding the mcb32 toolchain, we recommend the [mcb32tools installation guide](https://github.com/is1200-example-projects/mcb32tools), the ChipKit manual as well as the provided guides, FAQ's and other help provided by the KTH course IS1500.
 
 ## Usage
 
