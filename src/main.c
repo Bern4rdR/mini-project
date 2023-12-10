@@ -108,22 +108,23 @@ void menu_loop(int* map_select) {
     }
 }
 
-void game_loop(int map[64]) {
+void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
     int playerPosX = 10, playerPosY = 27;
     float playerDirection = 0;
     int walking = 0;
+    int mapSize = 8;
 
     float pot_value = readADC() / 1023;
     
 
     // game loop
     while (1) {
-        castRay(&playerDirection, &playerPosX, &playerPosY, map, 8, display);
+        castRay(&playerDirection, &playerPosX, &playerPosY, map, mapSize, display);
 
         user_isr(&walking, &playerDirection);
 
         if (getbtns() & 0x2) {
-            movePlayer(&playerDirection, &playerPosX, &playerPosY, map, 8);
+            movePlayer(&playerDirection, &playerPosX, &playerPosY, map, mapSize);
         }
 
         render_display(display);
@@ -187,9 +188,9 @@ void main() {
     int* maps[2] = {map1, map2};
     
     while(1) {
-        map_select = 0;
+        int map_select = 0;
         menu_loop(&map_select);
 
-        game_loop(maps[map_select]);
+        game_loop(maps[map_select], display);
     }
 }
