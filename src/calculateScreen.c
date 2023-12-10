@@ -78,7 +78,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         // Check horizontal lines
         dof = 0;
         float disH=1000000, hx=*playerPosX, hy=*playerPosY;
-        float aTan = -1/tan(rayDirection);
+        float aTan = 1/tan(rayDirection);
         if (rayDirection > PI) {
             rayY = (((int)*playerPosY >> 3) << 3) - 0.0001;
             rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
@@ -117,7 +117,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         // Check vertical lines
         dof = 0;
         float disV=1000000, vx=*playerPosX, vy=*playerPosY;
-        float nTan = -tan(rayDirection);
+        float nTan = tan(rayDirection);
         if (rayDirection > P2 && rayDirection < P3) {
             rayX = (((int)*playerPosX >> 3) << 3) - 0.0001;
             rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
@@ -171,12 +171,6 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
     }
 }
 
-
-int within_margin(float value, float target, float margin) {
-    return (value > target - margin && value < target + margin);
-}
-
-
 /* Move the player in the directino they are facing
  * @param playerDirection: pointer to the player's direction
  * @param playerPosX:      pointer to the player's x position
@@ -195,16 +189,16 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
         moveY =  1;
     } else if (within_margin(*playerDirection, 3*PI/4, margin)) {
         // player is moving down and right
-        moveX = -1;
-        moveY =  1;
+        moveX =  1;
+        moveY = -1;
     } else if (within_margin(*playerDirection, 5*PI/4, margin)) {
         // player is moving down and left
         moveX = -1;
         moveY = -1;
     } else if (within_margin(*playerDirection, 7*PI/4, margin)) {
         // player is moving up and left
-        moveX =  1;
-        moveY = -1;
+        moveX = -1;
+        moveY =  1;
     } else if (within_margin(*playerDirection, 0, margin)) {
         // player is moving right
         moveX =  1;
@@ -219,12 +213,9 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
         moveY = -1;
     }
 
-    *playerPosX += moveX;
-    *playerPosY += moveY;
-
-    // // check for collisions before moving
-    // if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
-    //     *playerPosX += moveX;
-    //     *playerPosY += moveY;
-    // }
+    // check for collisions before moving
+    if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
+        *playerPosX += moveX;
+        *playerPosY += moveY;
+    }
 }
