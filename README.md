@@ -18,7 +18,7 @@ This is a simple maze runner game using ray tracing to display from 2D to 3D and
 
 There are four buttons on the ChipKIT. However this project only uses/needs one button, button 4 (BTN4). BTN4 is responsible for moving forward in the players direction.
 
-The potientiometer can be used to rotate the players field of view, i.e what the player can see which is also what is displayed on the screen. The potientiometer uses the relative rotation since it can only rotate 270 degress (3/2 PI radians) while the player is supposed to be able to rotate 360 degress (2 PI). So if it rotates a third of its rotation to the left then the players field of view will also be rotated a third of its rotation to the left.
+The potientiometer can be used to rotate the players field of view, i.e what the player can see which is also what is displayed on the screen. The potientiometer uses the relative rotation since it can only rotate about 270 degress (3/2 PI radians) while the player is supposed to be able to rotate 360 degress (2 PI). So if it rotates a third of its rotation to the left then the players field of view will also be rotated a third of its rotation to the left.
 
 ## Installation
 
@@ -36,6 +36,10 @@ The potientiometer can be used to rotate the players field of view, i.e what the
 make
 make install
 ```
+
+5. Follow the instructions on the screen and enjoy. 
+
+For further installation instructions 
 
 ## Usage
 
