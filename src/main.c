@@ -122,12 +122,12 @@ void main() {
     
     int mapping[128] = {
         1, 1, 1, 1, 1, 1, 1, 1, // 0-7,
-        1, 0, 0, 0, 0, 0, 0, 0, // 8-15,
-        1, 0, 0, 0, 0, 0, 0, 0, // 16-23
-        1, 0, 0, 0, 0, 0, 0, 0, // 24-31
-        1, 0, 0, 0, 0, 1, 0, 0, // 32-39
-        1, 0, 0, 0, 1, 1, 0, 0, // 40-47
-        1, 0, 0, 0, 0, 0, 0, 0, // 48-55
+        1, 0, 0, 1, 0, 0, 0, 1, // 8-15,
+        1, 0, 0, 1, 0, 0, 0, 1, // 16-23
+        1, 0, 0, 0, 0, 0, 0, 1, // 24-31
+        1, 0, 0, 0, 0, 1, 0, 1, // 32-39
+        1, 0, 0, 0, 1, 1, 0, 1, // 40-47
+        1, 0, 0, 0, 0, 0, 0, 1, // 48-55
         1, 1, 1, 1, 1, 1, 1, 1, // 56-63
     // 0-7, 8-15, 16-23, 24-31, 32-39, 40-47, 48-55, 56-63
     };
@@ -158,15 +158,6 @@ void main() {
 
         user_isr(&walking, &playerDirection);
 
-        if (getbtns() & 0x2) {
-            //movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
-            int movX = cos(playerDirection) + 0.5;
-            int movY = sin(playerDirection) + 0.5;
-            if (mapping[((int)(playerPosY + movY) * 8) + (int)(playerPosX + movX)] == 0) {
-                playerPosX += movX;
-                playerPosY += movY;
-            }
-        }
         render_display(display);
     }
 }
