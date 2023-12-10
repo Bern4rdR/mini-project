@@ -158,10 +158,8 @@ void main() {
 
         user_isr(&walking, &playerDirection);
 
-        if (getbnts() & 0x2) {
-            //movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
-            playerPosX = 40;
-            playerPosY = 50;
+        if (getbtns() & 0x2) {
+            movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
         }
         render_display(display);
     }
