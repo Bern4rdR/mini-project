@@ -163,7 +163,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         // ca = range_reduce(ca);
         // disT = disT * cos(ca);
         // Draw one line of the wall
-        drawLine(display, ((DISPLAY_WIDTH - r) - 1), disT, opacity);
+        drawLine(display, r, disT, opacity);
 
 
         rayDirection += DR;
