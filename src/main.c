@@ -79,7 +79,7 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
 
     display_update(textbuffer);
 
-    quicksleep(5000000);
+    quicksleep(500000);
 
     // menu loop
     while (1) {
