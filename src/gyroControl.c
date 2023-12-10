@@ -11,7 +11,7 @@
 #define PI 3.1415926535
 
 // pin constants
-#define BTN4 0x4
+#define BTN3 0x2
 #define POTENTIOMETER 14
 #define SAMPLE_TIME 250
 
@@ -25,12 +25,10 @@
 void user_isr(int* walking, float* playerDirection) {
     // wait for timer interrupt - aka ticks every 0.1 second
     while((IFS(0) & 0x100));
-    if (getbtns() & BTN4) {
-        if (!*walking) {
-            *walking = 1;
-        } else if (*walking) {
-            *walking = 0;
-        }
+    if (getbtns() & BTN3) {
+        *walking = 1;
+    } else {
+        *walking = 0;
     }
 
     // convert to a float between 0 and 1

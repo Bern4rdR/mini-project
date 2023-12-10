@@ -129,7 +129,7 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
 
         user_isr(&walking, &playerDirection);
 
-        if (getbtns() & 0x2) {
+        if (walking) {
             movePlayer(&playerDirection, &playerPosX, &playerPosY, map, mapSize);
         }
 
