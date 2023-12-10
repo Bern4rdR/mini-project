@@ -71,13 +71,16 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
  * @param map:             pointer to the map
  * @param mapSize:         size of the map
  */
-void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize, char display[4][DISPLAY_WIDTH]) {
+void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize[], char display[4][DISPLAY_WIDTH]) {
     // Cast a ray from the player position to the edge of the screen
     // Calculate the distance to the wall
     // Calculate the opacity of the wall
     // Draw the wall
+    int mapX = mapSize[0];
+    int mapY = mapSize[1];
+
     int r, mx, my, mp, dof;
-    float rayX, rayY, rayDirection, xo, yo, disT;
+    float rayX, rayY, rayDirection, xo, yo;
     rayDirection = *playerDirection - DR * DISPLAY_WIDTH/2;
     if (rayDirection < 0) {
         rayDirection += 2*PI;
@@ -86,23 +89,66 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         rayDirection -= 2*PI;
     }
     for (r = 0; r < DISPLAY_WIDTH; r++) {
+        // Check vertical lines
+        dof = 0;
+        float disV=1000000;
+        float vx, vy;
+        float nTan = tan(rayDirection);
+        if (cos(rayDirection) > 0.001) {
+            rayX = (((int)*playerPosX >> 6) << 6) + 64;
+            rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
+            xo = 64;
+            yo = -xo * nTan;
+        }
+        else if (cos(rayDirection) < -0.001) {
+            rayX = (((int)*playerPosX >> 6) << 6) -0.0001;
+            rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
+            xo = -64;
+            yo = -xo * nTan;
+        }
+        else {
+            rayX = *playerPosX;
+            rayY = *playerPosY;
+            dof = 8;
+        }
+        
+        while (dof < 8) {
+            mx = (int)(rayX) >> 6;
+            my = (int)(rayY) >> 6;
+            mp = (my * mapX) + mx;
+            if (mp > 0 && mp < mapX * mapY && map[mp] == 1) {
+                // hit wall
+                // Calculate distance to wall
+                disV = (cos(rayDirection) * (rayX - *playerPosX)) - (sin(rayDirection) * (rayY - *playerPosY));
+                dof = 8;
+            } else {
+                // next line
+                rayX += xo;
+                rayY += yo;
+                dof += 1;
+            }
+        }
+        vx = rayX;
+        vy = rayY;
+
+
         // Check horizontal lines
         dof = 0;
-        float disH=1000000, hx=*playerPosX, hy=*playerPosY;
-        float aTan = -1/tan(rayDirection);
-        if (rayDirection > PI) {
+        float disH=1000000;
+        float aTan = 1/tan(rayDirection);
+        if (sin(rayDirection) > 0.001) {
             rayY = (((int)*playerPosY >> 6) << 6) - 0.0001;
             rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
             yo = -64;
             xo = -yo * aTan;
         }
-        if (rayDirection < PI) {
+        else if (sin(rayDirection) < -0.001) {
             rayY = (((int)*playerPosY >> 6) << 6) + 64;
             rayX = ((*playerPosY - rayY) * aTan) + *playerPosX;
             yo = 64;
             xo = -yo * aTan;
         }
-        if (rayDirection == 0 || rayDirection == PI) {
+        else {
             rayX = *playerPosX;
             rayY = *playerPosY;
             dof = 8;
@@ -112,50 +158,11 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         while(dof < 8) {
             mx = (int)(rayX) >> 6;
             my = (int)(rayY) >> 6;
-            mp = (my * mapSize) + mx;
-            if (mp > 0 && mp < mapSize * mapSize && map[mp] != 0) {
+            mp = (my * mapX) + mx;
+            if (mp > 0 && mp < mapX * mapY && map[mp] == 1) {
                 // hit wall
                 // Calculate distance to wall
-                disH = sqrt(pow((rayX - *playerPosX), 2) + pow((rayY - *playerPosY), 2));
-                dof = 8;
-            } else {
-                // next line
-                rayX += xo;
-                rayY += yo;
-                dof += 1;
-            }
-        }
-        
-        // Check vertical lines
-        dof = 0;
-        float disV=1000000, vx=*playerPosX, vy=*playerPosY;
-        float nTan = -tan(rayDirection);
-        if (rayDirection > P2 && rayDirection < P3) {
-            rayX = (((int)*playerPosX >> 6) << 6) - 0.0001;
-            rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
-            xo = -64;
-            yo = -xo * nTan;
-        }
-        if (rayDirection < P2 || rayDirection > P3) {
-            rayX = (((int)*playerPosX >> 6) << 6) + 64;
-            rayY = ((*playerPosX - rayX) * nTan) + *playerPosY;
-            xo = 64;
-            yo = -xo * nTan;
-        }
-        if (rayDirection == 0 || rayDirection == PI) {
-            rayX = *playerPosX;
-            rayY = *playerPosY;
-            dof = 8;
-        }
-        
-        while (dof < 8) {
-            mx = (int)(rayX) >> 6;
-            my = (int)(rayY) >> 6;
-            mp = (my * mapSize) + mx;
-            if (mp > 0 && mp < mapSize * mapSize && map[mp] != 0) {
-                // hit wall
-                // Calculate distance to wall
-                disV = sqrt(pow((rayX - *playerPosX), 2) + pow((rayY - *playerPosY), 2));
+                disH = (cos(rayDirection) * (rayX - *playerPosX)) - (sin(rayDirection) * (rayY - *playerPosY));
                 dof = 8;
             } else {
                 // next line
@@ -165,8 +172,8 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             }
         }
 
-        if(disV < disH) {rayX=vx; rayY=vy; disT=disV;}//side=0;}
-        if(disH < disV) {rayX=hx; rayY=hy; disT=disH;}//side=1;}
+        float opacity = 1;
+        if(disV < disH) {rayX=vx; rayY=vy; disH=disV; opacity = 0.5;}
 
         float ca = *playerDirection - rayDirection;
         if (ca < 0) {
@@ -175,9 +182,9 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         if (ca > 2*PI) {
             ca -= 2*PI;
         }
-        disT = disT * cos(ca); // fix fishbowl effect
+        disH = disH * cos(ca); // fix fishbowl effect
         // Draw one line of the wall
-        drawLine(display, r, disT, 1);
+        drawLine(display, r, disT, opacity);
 
 
         rayDirection += DR;
