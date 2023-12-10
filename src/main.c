@@ -152,15 +152,13 @@ void main() {
     // }
     
 
-    PORTD = (~0x4 << 5);
-
     // // game loop
     while (1) {
         castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
         user_isr(&walking, &playerDirection);
 
-        if (getbnts() & 0x4) {
+        if (getbnts() & 0x2) {
             //movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
             playerPosX = 40;
             playerPosY = 50;
