@@ -119,7 +119,7 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
     float playerDirection = PI/2;
     int walking = 0;
     int mapSize = 8;
-    int goalX = 45, goalY = 45;
+    int goalX = 50, goalY = 50;
 
     float pot_value = readADC() / 1023;
     
