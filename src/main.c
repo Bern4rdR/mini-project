@@ -164,6 +164,5 @@ void main() {
             movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
         }
         render_display(display);
-        tick();
     }
 }

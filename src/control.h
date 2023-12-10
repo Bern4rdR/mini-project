@@ -10,7 +10,6 @@ void open_ports(void);
 
 // Timer
 void initTimer(void);
-void tick(void);
 
 // Analog-to-digital converter (ADC), for potentiometer
 void initADC(void);

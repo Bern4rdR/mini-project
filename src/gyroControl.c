@@ -23,14 +23,25 @@
  * @param playerDirection: pointer to a float that indicates the direction the player is facing
  */
 void user_isr(int* walking, float* playerDirection) {
-    if (getbtns() & BTN4) {
-        *walking = *walking ? 0 : 1;
+    // wait for timer interrupt - aka ticks every 0.1 seconds
+    if (!(IFS(0) & 0x100)) {
+            
+        if (getbtns() & BTN4) {
+            *walking = *walking ? 0 : 1;
+        }
+
+        // convert to a float between 0 and 1
+        float potentiometerFloat = (float)readADC() / 1023;
+        // convert to a float between 0 and 2pi
+        *playerDirection = potentiometerFloat * 2 * PI;        
     }
 
-    // convert to a float between 0 and 1
-    float potentiometerFloat = (float)readADC() / 1023;
-    // convert to a float between 0 and 2pi
-    *playerDirection = potentiometerFloat * 2 * PI;
+    // reset interrupt flag
+    IFSCLR(0) = 0x100;
+
+    // reset timer
+    TMR1 = 0;
+
 }
 
 void set_interrupts(void) {
@@ -57,19 +68,6 @@ void initTimer(void) {
     IFSCLR(0) = 0x100; // clear interrupt flag
     IECSET(0) = 0x100; // enable interrupt
 }
-
-// timer interrupt handler, ticks every 0.1 seconds
-void tick(void) {
-    // wait for timer interrupt
-    while (!(IFS(0) & 0x100));
-    // reset interrupt flag
-    IFSCLR(0) = 0x100;
-
-    // reset timer
-    TMR1 = 0;
-}
-
-
 
 void initADC() {
     /* PORTB.2 is analog pin with potentiometer*/
