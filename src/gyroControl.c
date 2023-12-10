@@ -27,7 +27,11 @@ void user_isr(int* walking, float* playerDirection) {
     if (!(IFS(0) & 0x100)) {
             
         if (getbtns() & BTN4) {
-            *walking = *walking ? 0 : 1;
+            if (!*walking) {
+                *walking = 1;
+            } else if (*walking) {
+                *walking = 0;
+            }
         }
 
         // convert to a float between 0 and 1
