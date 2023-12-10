@@ -71,7 +71,7 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
  * @param map:             pointer to the map
  * @param mapSize:         size of the map
  */
-void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize[], char display[4][DISPLAY_WIDTH]) {
+void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[], int mapSize, char display[4][DISPLAY_WIDTH]) {
     // Cast a ray from the player position to the edge of the screen
     // Calculate the distance to the wall
     // Calculate the opacity of the wall
