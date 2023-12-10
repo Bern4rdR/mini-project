@@ -28,7 +28,7 @@
  * @param distance: distance to the wall
  * @param opacity:  opacity of the line (0-1)
  */
-void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance) {
+void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opacity) {
     int i;
     // clear column
     for (i = 0; i < 4; i++) {
@@ -41,21 +41,26 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance) {
     if (height < 0) {
         height = 0;
     }
-
     // map height to 0-30
     height = (int)(height * 30);
+
+    int dither = 1/opacity;
 
     int top = (DISPLAY_HEIGHT - height)/2;
     int bot = (DISPLAY_HEIGHT + height)/2;
 
     // writes from the top to the bottom
     for (i = top; i < bot; i++) {
-        // get the chunk index and bit index of that column
-        int char_index = i / BYTE_SIZE;
-        int bit_index = i % BYTE_SIZE;
+        if (i % dither == 0) {
+            // calculate the index of the character in the display
+            // (4 characters per line, 128 lines)
+            // get the chunk index and bit index of that column
+            int char_index = i / BYTE_SIZE;
+            int bit_index  = i % BYTE_SIZE;
 
-        // set the bit
-        display[char_index][col] |= 1 << bit_index;
+            // set the bit
+            display[char_index][col] |= 1 << bit_index;
+        }
     }
 }
 
@@ -160,11 +165,11 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
             }
         }
 
-        if(disV < disH) {rayX=vx; rayY=vy; disT=disV; }//side=0;}
-        if(disH < disV) {rayX=hx; rayY=hy; disT=disH; }//side=1;}
+        if(disV < disH) {rayX=vx; rayY=vy; disT=disV; drawLine(display, r, disT, 1)}//side=0;}
+        if(disH < disV) {rayX=hx; rayY=hy; disT=disH; drawLine(display, r, disT, 0.5)}//side=1;}
 
         // Draw one line of the wall
-        drawLine(display, r, disT);
+        //drawLine(display, r, disT);
 
 
         rayDirection += DR;
