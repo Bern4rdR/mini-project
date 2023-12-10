@@ -175,7 +175,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         if (ca > 2*PI) {
             ca -= 2*PI;
         }
-        disT = disT * cos(ca); // fix fishbowl effect
+        //disT = disT * cos(ca); // fix fishbowl effect
         // Draw one line of the wall
         drawLine(display, r, disT, 1);
 

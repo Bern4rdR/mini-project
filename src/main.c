@@ -62,6 +62,12 @@ void init() {
 
     // initialize the ADC module (to read potentiometer)
     initADC();
+
+    set_interrupts();
+
+    open_ports();
+
+    initTimer();
 }
 
 void main() {

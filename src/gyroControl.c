@@ -33,17 +33,17 @@ void user_isr(int* walking, float* playerDirection) {
     *playerDirection = potentiometerFloat * 2 * PI;
 }
 
-// void set_interrupts(void) {
-//     // enable interrupts globally
-//     asm volatile("ei");
-// }
+void set_interrupts(void) {
+    // enable interrupts globally
+    asm volatile("ei");
+}
 
-// void open_ports(void) {
-//     // set PORTD as input
-//     TRISDSET = 0x7F0;
-//     // set PORTE as output
-//     TRISECLR = 0xFF;
-// }
+void open_ports(void) {
+    // set PORTD as input
+    TRISDSET = 0x7F0;
+    // set PORTE as output
+    TRISECLR = 0xFF;
+}
 
 // void initTimer(void) {
 //     // initialize timer 1
