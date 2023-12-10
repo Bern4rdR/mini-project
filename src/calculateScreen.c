@@ -218,8 +218,8 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
     }
 
     // check for collisions before moving
-    int mx = *playerPosX >> 3;
-    int my = *playerPosY >> 3;
+    int mx = (*playerPosX + moveX) >> 3;
+    int my = (*playerPosY + moveY) >> 3;
     int mp = (my * mapSize) + mx;
     if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
         *playerPosX -= moveX;
