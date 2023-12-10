@@ -124,7 +124,6 @@ void main() {
     };
     
     int playerPosX = 10, playerPosY = 35;
-    int mapSize[] = {16, 8};
     float playerDirection = 0;
     int walking = 0;
 
@@ -148,7 +147,7 @@ void main() {
 
     // // game loop
     while (1) {
-        castRay(&playerDirection, &playerPosX, &playerPosY, mapping, mapSize, display);
+        castRay(&playerDirection, &playerPosX, &playerPosY, mapping, 8, display);
 
         user_isr(&walking, &playerDirection);
 
