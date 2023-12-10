@@ -23,22 +23,20 @@
  * @param playerDirection: pointer to a float that indicates the direction the player is facing
  */
 void user_isr(int* walking, float* playerDirection) {
-    // wait for timer interrupt - aka ticks every 0.1 seconds
-    if (!(IFS(0) & 0x100)) {
-            
-        if (getbtns() & BTN4) {
-            if (!*walking) {
-                *walking = 1;
-            } else if (*walking) {
-                *walking = 0;
-            }
+    // wait for timer interrupt - aka ticks every 0.1 second
+    while((IFS(0) & 0x100));
+    if (getbtns() & BTN4) {
+        if (!*walking) {
+            *walking = 1;
+        } else if (*walking) {
+            *walking = 0;
         }
-
-        // convert to a float between 0 and 1
-        float potentiometerFloat = (float)readADC() / 1023;
-        // convert to a float between 0 and 2pi
-        *playerDirection = potentiometerFloat * 2 * PI;        
     }
+
+    // convert to a float between 0 and 1
+    float potentiometerFloat = (float)readADC() / 1023;
+    // convert to a float between 0 and 2pi
+    *playerDirection = potentiometerFloat * 2 * PI;
 
     // reset interrupt flag
     IFSCLR(0) = 0x100;
