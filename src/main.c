@@ -89,12 +89,12 @@ void menu_loop(int* map_select) {
         if(getsw() & SW4) {
             display_string(textbuffer, 3, "[Map 1]");
             display_string(textbuffer, 4, " Map 2");
-            map_select = 0;
+            *map_select = 0;
         }
         else {
             display_string(textbuffer, 3, " Map 1");
             display_string(textbuffer, 4, "[Map 2]");
-            map_select = 1;
+            *map_select = 1;
         }
         
         // if button 4 is pressed - start game
@@ -184,7 +184,7 @@ void main() {
     // 0-7, 8-15, 16-23, 24-31, 32-39, 40-47, 48-55, 56-63
     };
 
-    int maps[2] = {map1, map2};
+    int* maps[2] = {map1, map2};
     
     while(1) {
         map_select = 0;
