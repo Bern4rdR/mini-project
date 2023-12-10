@@ -62,27 +62,6 @@ void init() {
 
     // initialize the ADC module (to read potentiometer)
     initADC();
-
-    // initialize timer 1
-    T1CON = 0x70; // set prescaler to 256
-    PR1 = 3125; // set period to 0.1 seconds
-    TMR1 = 0; // reset timer
-    T1CONSET = 0x8000; // start timer
-
-    // set timer interrupt
-    IPCSET(2) = 0x1C; // set priority to 7
-    IFSCLR(0) = 0x100; // clear interrupt flag
-    IECSET(0) = 0x100; // enable interrupt
-}
-
-void tick() {
-    // wait until timer interrupt flag is set
-    while (!(IFS(0) & 0x100));
-    // reset timer interrupt flag
-    IFSCLR(0) = 0x100;
-
-    // reset timer
-    TMR1 = 0;
 }
 
 void main() {
@@ -135,7 +114,7 @@ void main() {
     int mapping[64] = {
         1, 1, 1, 1, 1, 1, 1, 1, // 0-8, 8-16, 16-24, 24-32, 32-40, 40-48, 48-56, 56-64
         1, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 0, 0, 0, 0, 0, 1,
+        1, 0, 0, 1, 1, 0, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
@@ -175,6 +154,5 @@ void main() {
             movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
         }
         render_display(display);
-        tick();
     }
 }

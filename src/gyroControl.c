@@ -53,8 +53,34 @@ void initADC() {
 	TRISECLR = 0xFF;
 	
 	/* Turn on ADC */
-	AD1CON1 |= (0x1 << 15);
+	AD1CON1 |= (0x1 << 15);    
 }
+
+// void initTimer() {
+//     // initialize timer 1
+//     T1CON = 0x70; // set prescaler to 256
+//     PR1 = 3125; // set period to 0.1 seconds
+//     TMR1 = 0; // reset timer
+//     T1CONSET = 0x8000; // start timer
+
+//     // set timer interrupt
+//     IPCSET(2) = 0x1C; // set priority to 7
+//     IFSCLR(0) = 0x100; // clear interrupt flag
+//     IECSET(0) = 0x100; // enable interrupt
+
+
+//     // the timer ticks every 0.1 seconds
+
+//     // wait until timer interrupt flag is set
+//     while (!(IFS(0) & 0x100));
+//     // reset timer interrupt flag
+//     IFSCLR(0) = 0x100;
+
+//     // reset timer
+//     TMR1 = 0;
+
+// }
+
 
 int readADC() {
     /* Start sampling, wait until conversion is done */

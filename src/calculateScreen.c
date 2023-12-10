@@ -36,13 +36,17 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
     }
 
     // calculate the height of the line
-    int height = DISPLAY_HEIGHT - (int)distance/3;
+    int height = DISPLAY_HEIGHT - (int)(distance/3);
     if (height < 5) {
         height = 5;
     }
     int dither = height * opacity;
 
-    for (i = (DISPLAY_HEIGHT-height)/2; i < height; i++) {
+    int top = (DISPLAY_HEIGHT - height)/2;
+    int bottom = (DISPLAY_HEIGHT + height)/2;
+
+    // writes from the top to the bottom
+    for (i = top; i < bottom; i++) {
         if (i % dither) {
             // get the chunk index and bit index of that column
             int char_index = i / BYTE_SIZE;
