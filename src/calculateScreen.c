@@ -221,8 +221,8 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
     int mx = (*playerPosX + moveX) >> 3;
     int my = (*playerPosY + moveY) >> 3;
     int mp = (my * mapSize) + mx;
-    if (mp > 0 && mp < mapSize * mapSize && map[mp] == 1) {
-        *playerPosX -= moveX;
-        *playerPosY -= moveY;
+    if (mp > 0 && mp < mapSize * mapSize && map[mp] == 0) {
+        *playerPosX += moveX;
+        *playerPosY += moveY;
     }
 }
