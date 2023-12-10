@@ -123,7 +123,7 @@ void main() {
     // 0-7, 8-15, 16-23, 24-31, 32-39, 40-47, 48-55, 56-63, 64-71, 72-79, 80-87, 88-95, 96-103, 104-111, 112-119, 120-127
     };
     
-    int playerPosX = 10, playerPosY = 32;
+    int playerPosX = 10, playerPosY = 35;
     float playerDirection = 0;
     int walking = 0;
 
