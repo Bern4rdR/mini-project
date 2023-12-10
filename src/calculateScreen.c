@@ -185,40 +185,37 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
     float margin = PI / 8;
     if (within_margin(*playerDirection, PI/4, margin)) {
         // player is moving up and right
-        moveX = *playerPosX + 1;
-        moveY = *playerPosY + 1;
+        moveX =  1;
+        moveY =  1;
     } else if (within_margin(*playerDirection, 3*PI/4, margin)) {
         // player is moving down and right
-        moveX = *playerPosX + 1;
-        moveY = *playerPosY - 1;
+        moveX =  1;
+        moveY = -1;
     } else if (within_margin(*playerDirection, 5*PI/4, margin)) {
         // player is moving down and left
-        moveX = *playerPosX - 1;
-        moveY = *playerPosY - 1;
+        moveX = -1;
+        moveY = -1;
     } else if (within_margin(*playerDirection, 7*PI/4, margin)) {
         // player is moving up and left
-        moveX = *playerPosX - 1;
-        moveY = *playerPosY + 1;
+        moveX = -1;
+        moveY =  1;
     } else if (within_margin(*playerDirection, 0, margin)) {
         // player is moving right
-        moveX = *playerPosX + 1;
+        moveX =  1;
     } else if (within_margin(*playerDirection, PI, margin)) {
         // player is moving left
-        moveX = *playerPosX - 1;
+        moveX = -1;
     } else if (within_margin(*playerDirection, PI/2, margin)) {
         // player is moving up
-        moveY = *playerPosY + 1;
+        moveY =  1;
     } else if (within_margin(*playerDirection, 3*PI/2, margin)) {
         // player is moving down
-        moveY = *playerPosY - 1;
+        moveY = -1;
     }
 
-    *playerPosX += moveX;
-    *playerPosY += moveY;
-
-    // // check for collisions before moving
-    // if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
-    //     *playerPosX += moveX;
-    //     *playerPosY += moveY;
-    // }
+    // check for collisions before moving
+    if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
+        *playerPosX += moveX;
+        *playerPosY += moveY;
+    }
 }
