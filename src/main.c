@@ -141,7 +141,18 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
             return;
         }
     
-        
+        if ((playerPosX >> 3) == (goalX >> 3) && (playerPosX >> 3) == (goalX >> 3)) {
+            // win
+            clear_display(display);
+            display_string(display, 1, "You win!");
+            display_string(display, 2, "BTN2 to exit");
+            display_update(display);
+            while(1) {
+                if (getbtns() & BTN2) {
+                    return;
+                }
+            }
+        }
 
     }    
 }
