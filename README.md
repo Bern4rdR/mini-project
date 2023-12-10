@@ -33,8 +33,8 @@ The potientiometer can be used to rotate the players field of view, i.e what the
 4. Install the repository to the ChipKit.
 
 ```bash
-make
-make install
+mini-project/src$ make
+mini-project/src$ make install
 ```
 
 5. Follow the instructions on the screen and enjoy.
@@ -49,6 +49,8 @@ For further installation instructions regarding the mcb32 toolchain, we recommen
 - Potentiometer: rotate to rotate player FOV in inputed rotational direction.
 
 ## Contributing
+
+This project was made by Bernard Rumar (bernardr) & Fredrik Magnevill (magnev).
 
 This is a school project which means no contributions are allowed.
 

@@ -62,6 +62,12 @@ void init() {
 
     // initialize the ADC module (to read potentiometer)
     initADC();
+
+    set_interrupts();
+
+    open_ports();
+
+    initTimer();
 }
 
 void main() {
@@ -90,8 +96,11 @@ void main() {
     while (1) {
         // if button 4 is pressed - start game
         if (getbtns() & 0x4) {
+            // can remove for actual game
             display_string(textbuffer, 1, "BTN4 pressed");
             display_update(textbuffer);
+            
+            // keep for actual game
             quicksleep(500000);
             clear_display(textbuffer);
             display_update(textbuffer);
