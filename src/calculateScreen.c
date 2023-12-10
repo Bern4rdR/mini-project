@@ -39,9 +39,8 @@ void drawLine(char display[4][DISPLAY_WIDTH], int col, float distance, float opa
     // map distance (can be 0-48) to 0-1
     float height = distance / 48;
     // map height to 0-30
-    height *= 30;
-    height = (int)height;
-    
+    height = (int)(height * 30);
+
     int dither = height * opacity;
 
     int top = (DISPLAY_HEIGHT - height)/2;
