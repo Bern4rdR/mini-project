@@ -201,21 +201,24 @@ void movePlayer(float* playerDirection, int* playerPosX, int* playerPosY, int ma
         moveY = *playerPosY + 1;
     } else if (within_margin(*playerDirection, 0, margin)) {
         // player is moving right
-        moveX = *playerPosX + 2;
+        moveX = *playerPosX + 1;
     } else if (within_margin(*playerDirection, PI, margin)) {
         // player is moving left
-        moveX = *playerPosX - 2;
+        moveX = *playerPosX - 1;
     } else if (within_margin(*playerDirection, PI/2, margin)) {
         // player is moving up
-        moveY = *playerPosY + 2;
+        moveY = *playerPosY + 1;
     } else if (within_margin(*playerDirection, 3*PI/2, margin)) {
         // player is moving down
-        moveY = *playerPosY - 2;
+        moveY = *playerPosY - 1;
     }
 
-    // check for collisions before moving
-    if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
-        *playerPosX += moveX;
-        *playerPosY += moveY;
-    }
+    *playerPosX += moveX;
+    *playerPosY += moveY;
+
+    // // check for collisions before moving
+    // if (map[((int)(*playerPosY + moveY) * mapSize) + (int)(*playerPosX + moveX)] == 0) {
+    //     *playerPosX += moveX;
+    //     *playerPosY += moveY;
+    // }
 }
