@@ -152,7 +152,7 @@ void main() {
     // }
     
 
-    
+    PORTD = (~0x4 << 5);
 
     // // game loop
     while (1) {
