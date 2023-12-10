@@ -160,8 +160,12 @@ void main() {
 
         if (getbtns() & 0x2) {
             //movePlayer(&playerDirection, &playerPosX, &playerPosY, mapping, 8);
-            playerPosX += 1;
-            playerPosY += 1;
+            int movX = cos(playerDirection) + 0.5;
+            int movY = sin(playerDirection) + 0.5;
+            if (mapping[((int)(playerPosY + movY) * 8) + (int)(playerPosX + movX)] == 0) {
+                playerPosX += movX;
+                playerPosY += movY;
+            }
         }
         render_display(display);
     }
