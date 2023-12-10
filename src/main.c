@@ -114,7 +114,7 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
     }
 }
 
-void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
+void game_loop(int map[64], char display[4][DISPLAY_WIDTH], char textbuffer[4][16]) {
     int playerPosX = 10, playerPosY = 10;
     float playerDirection = PI/2;
     int walking = 0;
@@ -143,10 +143,10 @@ void game_loop(int map[64], char display[4][DISPLAY_WIDTH]) {
     
         if ((playerPosX >> 3) == (goalX >> 3) && (playerPosX >> 3) == (goalX >> 3)) {
             // win
-            clear_display(display);
-            display_string(display, 1, "You win!");
-            display_string(display, 2, "BTN2 to exit");
-            display_update(display);
+            clear_display(textbuffer);
+            display_string(textbuffer, 1, "You win!");
+            display_string(textbuffer, 2, "BTN2 to exit");
+            display_update(textbuffer);
             while(1) {
                 if (getbtns() & BTN2) {
                     return;
@@ -212,6 +212,6 @@ void main() {
         int map_select = 0;
         menu_loop(&map_select, textbuffer);
 
-        game_loop(maps[map_select], display);
+        game_loop(maps[map_select], display, textbuffer);
     }
 }
