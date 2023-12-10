@@ -166,7 +166,7 @@ void castRay(float* playerDirection, int* playerPosX, int* playerPosY, int map[]
         drawLine(display, r, disT, opacity);
 
 
-        rayDirection += DR;
+        rayDirection -= DR;
         rayDirection = range_reduce(rayDirection);
     }
 }
