@@ -16,7 +16,7 @@ This is a simple maze runner game using ray tracing to display from 2D to 3D and
 
 ## Tutorial
 
-There are four buttons on the ChipKIT. However this project only uses/needs two buttons, button 4 (BTN4) and button 2. BTN4 is responsible for moving forward in the players direction. BTN2 is the exit button while in a game, in case you get lost and want to try again.
+There are four buttons on the ChipKIT. However this project only uses/needs three buttons, button 4 (BTN4), button 3 (BTN3) and button 2 (BTN2). BTN4 is used to select the currently selected option. BTN3 is responsible for moving forward in the players direction. BTN2 is the exit button while in a game, in case you get lost and want to try again.
 
 It also utilizes one of the ChipKIT switches, more specifically switch four (SW4). SW4 is used to indicate which of the two maps to choice.
 
@@ -51,7 +51,8 @@ For further installation instructions regarding the mcb32 toolchain, we recommen
 
 - SW4: map selctor indicator.
 - BTN2: exit game to main menu.
-- BTN4: go forwards.
+- BTN3: go forward.
+- BTN4: select current option.
 - Potentiometer: rotate to rotate player FOV in inputed rotational direction.
 
 ## Contributing

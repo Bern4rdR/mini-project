@@ -23,6 +23,8 @@
  * @param playerDirection: pointer to a float that indicates the direction the player is facing
  */
 void user_isr(int* walking, float* playerDirection) {
+    // interrupt service rutine, handles all the interrupts
+    
     // wait for timer interrupt - aka ticks every 0.1 second
     while((IFS(0) & 0x100));
     if (getbtns() & BTN3) {

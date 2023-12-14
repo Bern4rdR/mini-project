@@ -115,7 +115,7 @@ void menu_loop(int* map_select, char textbuffer[4][16]) {
 }
 
 void game_loop(int map[64], char display[4][DISPLAY_WIDTH], char textbuffer[4][16]) {
-    int playerPosX = 50, playerPosY = 45;
+    int playerPosX = 10, playerPosY = 10;
     float playerDirection = PI/2;
     int walking = 0;
     int mapSize = 8;
